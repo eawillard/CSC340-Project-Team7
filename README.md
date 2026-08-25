@@ -1,5 +1,5 @@
-## Title
-> Your project title
+## LibraryPal 
+> LibraryPal
 
 ## Team Members
 > Toni Graham
