@@ -64,7 +64,9 @@ Out of scope (deferred).
       Then  I should have my review and rating displayed next to the book
 
 2.2 Provider Stories
+   
     US-21 - Register and manage profile
+    
     Story: As a provider, I want to create my profile so that I can attract readers and help them use services.
     Acceptance:
 
@@ -109,7 +111,7 @@ Out of scope (deferred).
     Scenario: Provider views reviews
       Given I am logged in as a provider
       When  I can view customer profiles or reviews section
-      Then  I can see ratings and reviews related to their services.
+      Then  I can see ratings and reviews related to their experiences and use it to improve.
       
 3. Non‑Functional Requirements (make them measurable)
 
