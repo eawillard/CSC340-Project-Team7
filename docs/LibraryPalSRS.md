@@ -7,7 +7,7 @@ Version: 1.0
 Date: 2026-09-18
 1. Overview
 
-Vision. LibraryPal is designed to help readers or students to connect and use local libraries by providing more convenient ways to request, pick up/drop off, and donate books, as well as providers help people get use out of their community.
+Vision. LibraryPal is designed to help readers or students to connect and use local libraries by providing more convenient ways to request, pick up/drop off, and donate books, as well as helping providers connect people with their local library and make better use of community resources.
 
 Glossary: Terms used in the project
 
@@ -19,7 +19,7 @@ Glossary: Terms used in the project
 
 Primary Users / Roles.
 
-    Customer (e.g., Student/Patient/Pet Owner/etc. ) — 1 line goal statement.
+    Customer (e.g., Student/Patient/Pet Owner/etc. ) — Allows users to search for local libraries, browse and request books, schedule pickups/drop-offs, and write reviews.
     Provider (Library Coordinator) — Attract readers/students and manage services.
   
 
@@ -34,33 +34,34 @@ Scope (this semester).
 
 Out of scope (deferred).
 
-    <deferred 1>
-    <deferred 2>
+    New users can request to get notifications via Email for pickup reminders, request updates, etc.
+    Users that read available books will be recommended books based on their preferences and reading history
+    
 
     This document is requirements‑level and solution‑neutral; design decisions (UI layouts, API endpoints, schemas) are documented separately.
 
 2. Functional Requirements (User Stories)
 
-Write each story as: As a <role>, I want <capability>, so that <benefit>. Each story includes at least one Given/When/Then scenario.
+
 2.1 Customer Stories
 
     US‑1 —
-    Story: As a customer, I want … so that …
-    Acceptance:
+    Story: As a customer, I want to browse available books and schedule a pickup from my local library so that I can conveniently borrow books.
+    Acceptance: 
 
-    Scenario: <happy path>
-      Given <preconditions>
-      When  <action>
-      Then  <observable outcome>
+    Scenario: Schedule a book pickup
+      Given I have selected an available book
+      When  I select a library and choose an available pickup date
+      Then  I can schedule a pickup date for the book I want to borrow
 
     US‑2 —
-    Story: As a customer, I want … so that …
-    Acceptance:
+    Story: As a customer, I want to review books I've read so I can share my feelings with other readers
+    Acceptance: 
 
-    Scenario: <happy path>
-      Given <preconditions>
-      When  <action>
-      Then  <observable outcome>
+    Scenario: Write book reviews
+      Given I have read a book available on LibraryPal
+      When  I select the book and write a review
+      Then  I should have my review and rating displayed next to the book
 
 2.2 Provider Stories
     US-21 - Register and manage profile
@@ -97,7 +98,7 @@ Write each story as: As a <role>, I want <capability>, so that <benefit>. Each s
     Acceptance:
 
     Scenario: Provider reviews a request
-      Given I am logged in as a trainer
+      Given I am logged in as a provider
       When  I view customer book requests
       Then  I can see requested books and customer request information
 
@@ -106,16 +107,16 @@ Write each story as: As a <role>, I want <capability>, so that <benefit>. Each s
     Acceptance:
 
     Scenario: Provider views reviews
-      Given I am logged in as a trainer
+      Given I am logged in as a provider
       When  I can view customer profiles or reviews section
       Then  I can see ratings and reviews related to their services.
       
 3. Non‑Functional Requirements (make them measurable)
 
-    Performance: description
-    Availability/Reliability: description
-    Security/Privacy: description
-    Usability: description
+    Performance: 90% of book scheduling, book requests, and library searches should receive a response within 4 seconds.
+    Availability/Reliability: The scheduling system should be available 99% of the time, with scheduled maintenance windows scheduled and communicated in advance.
+    Security/Privacy: All user data should be private, all data should be encrypted and the system will implement security measures to ensure that user data will be encrypted during transmission.
+    Usability: Users should be able to complete book requests and connect to local libraries within 5 minutes without external assistance
 
 4. Assumptions, Constraints, and Policies
 
