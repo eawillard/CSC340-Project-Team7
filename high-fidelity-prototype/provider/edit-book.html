@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="navbar">
+                <a href="../index.html" class="navbar-brand">LibraryPal</a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="manage-books.html">My Books</a></li>
+                    <li><a href="view-members.html">Members</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="../login.html">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Edit Book -->
+        <main>
+            <section>
+                <h1>Edit Book</h1>
+                <p>Update the information for this book.</p>
+            </section>
+
+            <section>
+                <h2>Book Information</h2>
+                <form id="editBookForm">
+                    <div>
+                        <label for="bookTitle">Book Title</label>
+                        <input type="text" id="bookTitle" name="bookTitle" value="The Great Gatsby" required>
+                    </div>
+                    <div>
+                        <label for="author">Author</label>
+                        <input type="text" id="author" name="author" value="F. Scott Fitzgerald" required>
+                    </div>
+                    <div>
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" value="9780743273565" required>
+                    </div>
+                    <div>
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option selected>Fiction</option>
+                            <option>Non-Fiction</option>
+                            <option>Science Fiction</option>
+                            <option>Fantasy</option>
+                            <option>Mystery</option>
+                            <option>Biography</option>
+                            <option>History</option>
+                            <option>Romance</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="6" cols="50" required>The Great Gatsby is a classic novel about wealth, love, and the American Dream.</textarea>
+                    </div>
+                    <div>
+                        <label for="copies">Number of Copies</label>
+                        <input type="number" id="copies" name="copies" value="3" min="1" required>
+                    </div>
+                    <div>
+                        <label for="status">Book Status</label>
+                        <select id="status" name="status">
+                            <option selected>Available</option>
+                            <option>Checked Out</option>
+                            <option>Reserved</option>
+                            <option>Unavailable</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit">Save Changes</button>
+                        <a href="manage-books.html">Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

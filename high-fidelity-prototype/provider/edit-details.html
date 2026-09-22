@@ -3,9 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+      <link rel="stylesheet" href="styles.css">
+    <title>Edit Provider Profile | LibraryPal</title>
 </head>
 <body>
-    
+    <div class="container">
+
+<!-- Navigation -->
+<nav>
+
+  <div class="navbar">
+
+    <a href="../index.html" class="navbar-brand">
+      LibraryPal
+    </a>
+
+    <ul class="nav-links">
+
+      <li>
+        <a href="dashboard.html">Dashboard</a>
+      </li>
+      <li>
+        <a href="manage-books.html">Books</a>
+      </li>
+      <li>
+        <a href="manage-services.html">Services</a>
+      </li>
+      <li>
+        <a href="view-customers.html">Customers</a>
+      </li>
+
+      <li>
+        <a href="profile.html">
+          Profile
+        </a>
+      </li>
+
+      <li>
+        <a href="../login.html" class="btn btn-outline">
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Header -->
+<section class="section">
+  <div class="container">
+    <h1>
+      Edit Provider Profile
+    </h1>
+    <p class="text-muted">
+      Update your personal and library information below.
+    </p>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="section">
+  <div class="container" style="max-width: 700px;">
+    <div class="card">
+      <div class="card-content">
+        <form id="editDetailsForm" action="profile.html" method="get">
+
+
+          <h2>
+            Personal Information
+          </h2>
+          <br>
+          <div class="form-group">
+
+            <label for="firstName">
+              First Name
+            </label>
+
+            <input
+              type="text"
+              id="firstName"
+              placeholder="John"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">
+              Last Name
+            </label>
+
+            <input
+              type="text"
+              id="lastName"
+              placeholder="Doe"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              placeholder="john.doe@example.com"
+              required>
+          </div>
+
+          <div class="form-group">
+
+            <label for="phone">
+              Phone
+            </label>
+
+            <input
+              type="tel"
+              id="phone"
+              placeholder="(336) 555-0142"
+              required>
+
+          </div>
+          <br>
+          <h2>
+            Library Information
+          </h2>
+
+          <br>
+
+          <div class="form-group">
+
+            <label for="libraryName">
+              Library Name
+            </label>
+
+            <input
+              type="text"
+              id="libraryName"
+              placeholder="Greensboro Central Library"
+              required>
+          </div>
+
+          <div class="form-group">
+
+            <label for="libraryAddress">
+              Library Address
+            </label>
+
+            <input
+              type="text"
+              id="libraryAddress"
+              placeholder="123 Main Street, Greensboro, NC"
+              required>
+          </div>
+
+          <div class="form-group">
+
+            <label for="libraryDescription">
+              Library Description
+            </label>
+
+            <textarea
+              id="libraryDescription"
+              rows="5"
+              placeholder="Tell customers about your library and the services you provide.">Greensboro Community Library provides books, pickup services, and community resources for local readers and students.</textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Save Changes
+          </button>
+
+          <a href="profile.html" class="btn btn-outline">
+
+            Cancel
+
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>
+    &copy; 2026 LibraryPal. All rights reserved.
+  </p>
+</footer>
+</div>
 </body>
 </html>
