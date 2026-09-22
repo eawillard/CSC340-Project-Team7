@@ -63,6 +63,21 @@ Out of scope (deferred).
       When  I select the book and write a review
       Then  I should have my review and rating displayed next to the book
 
+       US‑3 —
+    Story: As a customer, I want to create a user profile and share it with my friends in order to keep track of all the books I've checked out
+
+    Scenario: Create user profile
+      Given I have checked out a book or want to check out a book on LibraryPal
+      When  I open the website and click 'Create Account'
+      Then  I can create an account and write reviews, check out books, etc.
+    US‑4 —
+    Story: As a customer, I want to donate books so I can help improve my local library
+
+    Scenario: Donate books
+      Given I have a book not available on LibraryPal that I would like to donate to my library
+      When  I complete the donation form
+      Then  I should have an email sent to me notifying me of the steps to take to donate a book
+
 2.2 Provider Stories
    
     US-21 - Register and manage profile
