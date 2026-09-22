@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Books - LibraryPal</title>
+</head>
+<body>
+    <header>
+    <h1>LibraryPal</h1>
+
+    <nav>
+        <ul>
+            <li><a href="browse-books.html">Browse Books</a></li>
+            <li><a href="find-library.html">Find a Library</a></li>
+            <li><a href="requests.html">My Books</a></li>
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="../login.html">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+    <main>
+        <h2>Browse Books</h2>
+
+        <p>
+            Browse books available through local libraries.
+        </p>
+
+        <form>
+            <label for="search">Search for a book:</label>
+            <input type="search" id="search" name="search">
+
+            <button type="submit">Search</button>
+        </form>
+
+        <section>
+            <h3>Available Books</h3>
+
+            <article>
+                <img src="../images\Gatsby_cover.jpg" alt="The Great Gatsby book cover" width="150">
+                <h4>The Great Gatsby</h4>
+                <p>Author: F. Scott Fitzgerald</p>
+                <p>Status: Available</p>
+                <p>Library: Local Library</p>
+
+                <a href="book-details.html">View Book</a>
+                <button type="button" onclick="holdBook()">Reserve Book</button>
+            </article>
+
+            <article>
+                <img src="../images\Kamen_Rider_English_Manga_webp.png" alt="Kamen Rider omnibus book cover" width="150">
+                <h4>Kamen Rider: Seven Seas Omnibus Collection</h4>
+                <p>Author: Shotaro Ishinomori</p>
+                <p>Status: Available</p>
+                <p>Library: Local Library</p>
+
+                <a href="book-details.html">View Book</a>
+                <button type="button" onclick="holdBook()">Reserve Book</button>
+            </article>
+
+            <article>
+                <img src="../images\Bungo_Stray_Dogs_Volume_1.jpg" alt="Bungo Stray Dogs Volume 1 book cover" width="150">
+                <h4>Bungo Stray Dogs: Vol. 1</h4>
+                <p>Author: Kafka Asagiri</p>
+                <p>Status: Unavailable</p>
+                <p>Library: Local Library</p>
+
+                <a href="book-details.html">View Book</a>
+                <button type="button" onclick="holdBook()">Reserve Book</button>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 LibraryPal</p>
+    </footer>
+
+     <script>
+      function holdBook() {
+
+        alert('Book is now reserved.');
+        window.location.href = 'requests.html';
+
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+</body>
+</html>
