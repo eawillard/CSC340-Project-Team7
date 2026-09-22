@@ -3,9 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+      <link rel="stylesheet" href="styles.css">
+    <title>View Customers | LibraryPal</title>
 </head>
 <body>
-    
+    <div class="container">
+
+    <!-- Navigation -->
+    <nav>
+      <div class="navbar">
+        <a href="../index.html" class="navbar-brand">LibraryPal</a>
+        <ul class="nav-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="manage-books.html">My Books</a></li>
+          <li><a href="view-members.html">Members</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="../login.html">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+        <main>
+            <section>
+                <h1>Library Members</h1>
+                <p>View member information and manage your library members.</p>
+            </section>
+
+      <!-- Search -->
+      <section>
+        <h2>Search Members</h2>
+        <form>
+          <label for="search">Search Members</label>
+          <input type="text" id="search" name="search" placeholder="Search members...">
+          <label for="status">Member Status</label>
+          <select id="status" name="status">
+            <option>All Members</option>
+            <option>Active</option>
+            <option>Inactive</option>
+            <option>Past Members</option>
+          </select>
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+            <!-- Members -->
+            <section>
+                <h2>Members</h2>
+
+        <!-- Member 1 -->
+        <article>
+          <h3>Jane Doe</h3>
+          <p><strong>Status:</strong> Active</p>
+          <p><strong>Books Checked Out:</strong> 2</p>
+          <p><strong>Books Returned:</strong> 8</p>
+          <p><strong>Member Since:</strong> January 2026</p>
+          <p><strong>Email:</strong> jane@example.com</p>
+          <p><strong>Phone:</strong> (555) 123-4567</p>
+          <a href="member-profile.html">View Profile</a>
+          <button type="button">Message</button>
+        </article>
+
+                <hr>
+                <!-- Member 2 -->
+                <article>
+                    <h3>Sarah Noble</h3>
+                    <p><strong>Status:</strong> Active</p>
+                    <p><strong>Books Checked Out:</strong> 1</p>
+                    <p><strong>Books Returned:</strong> 12</p>
+                    <p><strong>Member Since:</strong> February 2026</p>
+                    <p><strong>Email:</strong> sarah@example.com</p>
+                    <p><strong>Phone:</strong> (555) 234-5678</p>
+                    <a href="member-profile.html">View Profile</a>
+                    <button type="button">Message</button>
+                </article>
+                <hr>
+               
+                <!-- Member 6 -->
+                <article>
+                    <h3>Lisa Basil</h3>
+                    <p><strong>Status:</strong> Inactive</p>
+                    <p><strong>Books Checked Out:</strong> 0</p>
+                    <p><strong>Books Returned:</strong> 15</p>
+                    <p><strong>Member Since:</strong> January 2025</p>
+                    <p><strong>Email:</strong> lisa@example.com</p>
+                    <p><strong>Phone:</strong> (555) 678-9012</p>
+                    <a href="member-profile.html">View Profile</a>
+                    <button type="button">Message</button>
+                </article>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+
+            <p>
+                &copy; 2026 LibraryPal. All rights reserved.
+            </p>
+
+        </footer>
+
+    </div>
 </body>
 </html>

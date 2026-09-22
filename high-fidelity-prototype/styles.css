@@ -1,0 +1,450 @@
+
+:root {
+    --parchment: #f6f2ea;
+    --leather: #c29b87;
+    --oak: #a97954;
+    --manuscript: #1e423f;
+    --binding: #532c2e;
+    --crimson: #34000b;
+
+    --white: #fffdf9;
+    --soft-brown: #e7ddd1;
+    --muted: #665d57;
+     --shadow-lg: 0 8px 20px rgba(52, 0, 11, 0.14);
+     --radius: 0.35rem;
+    --shadow: rgba(52, 0, 11, 0.10);
+}
+
+/* ============================== General ============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--parchment);
+    color: var(--manuscript);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Gives anchored sections breathing room */
+section {
+    scroll-margin-top: 90px;
+}
+
+.container {
+    width: min(1100px, 90%);
+    margin: 0 auto;
+}
+
+/* ============================== Navigation ============================== */
+nav {
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--soft-brown);
+    box-shadow: var(--shadow);
+}
+
+nav .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 1rem 0;
+}
+
+nav li {
+    margin: 0;
+}
+
+nav a {
+    color: var(--manuscript);
+    text-decoration: none;
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: color 0.25s ease, background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+nav a:hover {
+    color: var(--binding);
+    background-color: var(--parchment);
+    transform: translateY(-1px);
+}
+
+/* ============================== Hero ============================== */
+#hero {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 0;
+    background-color: var(--parchment);
+    border-bottom: 1px solid var(--soft-brown);
+}
+
+#hero .container {
+    max-width: 850px;
+}
+
+#hero h1 {
+    color: var(--manuscript);
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    line-height: 1.1;
+    margin: 0 0 1.25rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+#hero h1::after {
+    content: "";
+    display: block;
+    width: 65px;
+    height: 3px;
+    background-color: var(--oak);
+    margin: 1.5rem auto;
+}
+
+#hero p {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    color: var(--muted);
+    font-size: 1.1rem;
+}
+
+/* ============================== Buttons ============================== */
+#hero a,
+.library-card a {
+    display: inline-block;
+    background-color: var(--crimson);
+    color: var(--white);
+    text-decoration: none;
+    border: 2px solid var(--crimson);
+    border-radius: var(--radius);
+    padding: 0.75rem 1.4rem;
+    margin: 0.35rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+        transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#hero a:hover,
+.library-card a:hover {
+    background-color: var(--binding);
+    border-color: var(--binding);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+#hero a:active,
+.library-card a:active {
+    transform: translateY(-1px);
+}
+
+/* ============================== Local Libraries ============================== */
+#local-libraries {
+    padding: 5rem 0;
+    background-color: var(--parchment);
+}
+
+#local-libraries h2,
+#how-it-works h2 {
+    color: var(--manuscript);
+    font-size: 2.2rem;
+    margin: 0 0 0.75rem;
+    font-weight: 700;
+}
+
+#local-libraries > .container > p {
+    color: var(--muted);
+    max-width: 700px;
+    margin-bottom: 2rem;
+}
+
+/* Library Cards */
+.library-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.library-card {
+    background-color: var(--white);
+    border: 1px solid var(--soft-brown);
+    border-left: 5px solid var(--oak);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.library-card:hover {
+    transform: translateY(-4px);
+    border-left-color: var(--binding);
+    box-shadow: var(--shadow-lg);
+}
+
+.library-card h3 {
+    color: var(--binding);
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.library-card p {
+    color: var(--muted);
+    margin: 0.45rem 0;
+}
+
+.library-card strong {
+    color: var(--manuscript);
+}
+
+.library-card a {
+    margin: 1rem 0 0;
+}
+
+/* ============================== How It Works ============================== */
+#how-it-works {
+    padding: 5rem 0;
+    background-color: #eee7dc;
+    border-top: 1px solid var(--soft-brown);
+    border-bottom: 1px solid var(--soft-brown);
+}
+#how-it-works h2 {
+    margin-bottom: 2rem;
+}
+#how-it-works article {
+    background-color: var(--white);
+    border-left: 4px solid var(--leather);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s ease, transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+#how-it-works article:hover {
+    border-left-color: var(--binding);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+#how-it-works article:last-child {
+    margin-bottom: 0;
+}
+#how-it-works h3 {
+    color: var(--binding);
+    margin: 0 0 0.4rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+#how-it-works p {
+    color: var(--muted);
+    margin: 0;
+}
+
+/* Footer  */
+footer {
+    background-color: var(--binding);
+    color: var(--parchment);
+    border-top: 4px solid var(--oak);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 0;
+}
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* General Links */
+a {
+    transition: color 0.25s ease;
+}
+
+/* Text Selection  */
+::selection {
+    background-color: var(--leather);
+    color: var(--binding);
+}
+
+```css
+/* Login & Registration Pages */
+
+.account-page {
+    min-height: 100vh;
+    background-color: var(--parchment);
+}
+
+/* Account Page Header */
+
+.account-page > header {
+    background-color: var(--binding);
+    color: var(--parchment);
+    text-align: center;
+    padding: 2rem 1rem;
+    border-bottom: 4px solid var(--oak);
+}
+
+.account-page > header h1 {
+    margin: 0;
+    color: var(--parchment);
+    font-size: 2.2rem;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+}
+
+.account-page > header p {
+    margin: 0.35rem 0 0;
+    color: var(--leather);
+}
+
+/* Login/Register Card */
+
+.account-page > main {
+    width: min(500px, 90%);
+    margin: 4rem auto;
+    background-color: var(--white);
+    border: 1px solid var(--soft-brown);
+    border-radius: 6px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 18px rgba(52, 0, 11, 0.08);
+}
+
+.account-page > main h2 {
+    text-align: center;
+    color: var(--manuscript);
+    font-size: 2rem;
+    font-weight: normal;
+    margin: 0 0 2rem;
+}
+
+/* Form */
+
+.account-page form {
+    width: 100%;
+}
+
+.account-page label {
+    display: block;
+    color: var(--manuscript);
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+}
+
+.account-page input[type="text"],
+.account-page input[type="email"],
+.account-page input[type="password"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--soft-brown);
+    border-radius: 4px;
+    background-color: #fffdfa;
+    color: var(--manuscript);
+    font-family: inherit;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.account-page input:focus {
+    outline: none;
+    border-color: var(--oak);
+    box-shadow: 0 0 0 3px rgba(169, 121, 84, 0.15);
+}
+
+/* Account Buttons */
+
+.account-page button {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--crimson);
+    border-radius: 4px;
+    background-color: var(--crimson);
+    color: var(--parchment);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.account-page button:hover {
+    background-color: var(--binding);
+    border-color: var(--binding);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px var(--shadow);
+}
+
+.account-page button:active {
+    transform: translateY(0);
+}
+
+/* Second Login Button */
+
+.account-page button + button {
+    margin-top: 0.75rem;
+}
+
+/* Account Links */
+
+.account-page main a {
+    color: var(--binding);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.account-page main a:hover {
+    color: var(--crimson);
+    text-decoration: underline;
+}
+
+/* Text underneath forms */
+
+.account-page > main > p {
+    text-align: center;
+    color: var(--muted);
+    margin-top: 1.5rem;
+}
+
+/* Account Footer */
+
+.account-page > footer {
+    background-color: var(--binding);
+    color: var(--parchment);
+    border-top: 4px solid var(--oak);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.account-page > footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+```

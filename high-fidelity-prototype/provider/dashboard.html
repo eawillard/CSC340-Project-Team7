@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+  <title>LibraryPal | Provider Dashboard</title>
 </head>
 <body>
-    
+  <div class="container">
+
+<!-- Navigation -->
+<nav>
+  <div class="navbar">
+    <a href="../index.html" class="navbar-brand">LibraryPal</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="manage-books.html">Books</a></li>
+      <li><a href="manage-services.html">Services</a></li>
+      <li><a href="view-customers.html">Customers</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="../login.html" class="btn btn-outline">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- Dashboard Header -->
+<section class="section">
+  <div class="container">
+    <div class="dashboard-header">
+      <div class="dashboard-title">Welcome Back, John!</div>
+      <div class="dashboard-subtitle">Manage your library and help customers connect with available books and services.</div>
+    </div>
+    <!-- Statistics -->
+    <div class="dashboard-grid">
+      <div class="stat-card"><div class="stat-number">248</div><div class="stat-label">Books in Collection</div></div>
+      <div class="stat-card"><div class="stat-number">187</div><div class="stat-label">Available Books</div></div>
+      <div class="stat-card"><div class="stat-number">12</div><div class="stat-label">Pending Requests</div></div>
+      <div class="stat-card"><div class="stat-number">86</div><div class="stat-label">Customers</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Upcoming Pickups -->
+<section class="section">
+  <div class="container">
+    <h2>Upcoming Pickups</h2>
+    <div class="session-item">
+      <div class="session-header">
+        <div>
+          <div class="session-title">Jane Smith — The Great Gatsby</div>
+          <span class="session-status status-upcoming">Confirmed</span>
+        </div>
+      </div>
+      <div class="session-details">
+        <div class="detail-item"><span class="detail-label">Pickup Date:</span> June 24, 2026</div>
+        <div class="detail-item"><span class="detail-label">Customer:</span> Jordan Smith</div>
+        <div class="detail-item"><span class="detail-label">Book:</span> The Great Gatsby</div>
+      </div>
+      <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+        <a href="customer-profile.html" class="btn btn-primary">View Customer</a>
+        <button class="btn btn-outline" onclick="alert('Pickup marked as ready')">Mark Ready</button>
+      </div>
+    </div>
+    <div class="session-item">
+      <div class="session-header">
+        <div>
+          <div class="session-title">Taylor Brown — No Longer Human</div>
+          <span class="session-status status-upcoming">Pending</span>
+        </div>
+      </div>
+      <div class="session-details">
+        <div class="detail-item"><span class="detail-label">Requested:</span> June 21, 2026</div>
+        <div class="detail-item"><span class="detail-label">Pickup Date:</span> June 27, 2026</div>
+        <div class="detail-item"><span class="detail-label">Book:</span> No Longer Human</div>
+      </div>
+      <div style="margin-top: 1rem;">
+        <button class="btn btn-primary" onclick="alert('Request approved')">Approve Request</button>
+        <button class="btn btn-outline" onclick="alert('Request details opened')">View Details</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Recent Reviews -->
+<section class="section">
+  <div class="container">
+    <h2>Recent Customer Reviews</h2>
+    <div class="card" style="margin-bottom: 1rem;">
+      <div class="card-content">
+        <p><strong>Jane Smith</strong></p>
+        <p>⭐⭐⭐⭐⭐ 5/5</p>
+        <p>"The pickup process was quick and easy. The staff had my book ready when I arrived."</p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom: 1rem;">
+      <div class="card-content">
+        <p><strong>Taylor Brown</strong></p>
+        <p>⭐⭐⭐⭐ 4/5</p>
+        <p>"Great selection of books and helpful staff."</p>
+      </div>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+</footer>
+
+  </div>
 </body>
 </html>

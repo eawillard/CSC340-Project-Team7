@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+  <title>Add a New Book | LibraryPal</title>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav>
+      <div class="navbar">
+        <a class="navbar-brand" href="../index.html">LibraryPal</a>
+        <ul class="nav-links">
+          <li><a href="provider-dashboard.html">Dashboard</a></li>
+          <li><a href="manage-books.html" style="color: var(--primary-color); font-weight: 700;">My Books</a></li>
+          <li><a href="view-customers.html">Customers</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a class="btn btn-outline" href="../login.html">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Add Book Section -->
+    <section class="section">
+
+      <div class="container" style="max-width: 600px;">
+        <div class="card">
+ 
+            <div class="card-content">
+          
+                <h2 class="text-center mb-2">Add a New Book</h2>
+
+            <p class="text-center text-muted mb-4">Add a book to your library collection</p>
+            
+            <form id="newBookForm">
+            
+                <h3>Book Information</h3>
+              <div class="form-group"><label for="bookTitle">Book Title</label><input id="bookTitle" type="text" placeholder="The Great Gatsby" required></div>
+
+              <div class="form-group"><label for="author">Author</label><input id="author" type="text" placeholder="F. Scott Fitzgerald" required></div>
+
+              <div class="form-group"><label for="isbn">ISBN</label><input id="isbn" type="text" placeholder="9780743273565" required></div>
+
+              <div class="form-group"><label for="category">Category</label><select id="category" required><option value="">Select a category</option><option value="fiction">Fiction</option><option value="nonfiction">Non-Fiction</option><option value="mystery">Mystery</option><option value="fantasy">Fantasy</option><option value="science-fiction">Science Fiction</option><option value="biography">Biography</option><option value="history">History</option><option value="romance">Romance</option><option value="other">Other</option></select></div>
+             
+              <div class="form-group"><label for="publicationYear">Publication Year</label><input id="publicationYear" type="number" placeholder="1925" min="0" required></div>
+             
+             
+              <div class="form-group"><label for="copies">Number of Copies</label><input id="copies" type="number" placeholder="1" min="1" required></div>
+             
+              <div class="form-group"><label for="description">Description</label><textarea id="description" placeholder="Enter a short description of the book..." required></textarea></div>
+             
+              <button class="btn btn-primary" type="button" style="width: 100%;" onclick="window.location.href='manage-books.html'">Add Book</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+
+      <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
