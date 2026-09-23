@@ -1,11 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Profile - LibraryPal</title>
 </head>
 <body>
-    
+  <div class="container">
+
+    <!-- Navigation -->
+    <nav>
+      <div class="navbar">
+        <a href="../index.html" class="navbar-brand">LibraryPal</a>
+        <ul class="nav-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="manage-books.html">Books</a></li>
+          <li><a href="manage-services.html">Services</a></li>
+          <li><a href="view-customers.html">Customers</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="../login.html" class="btn btn-outline">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Customer Header -->
+    <section class="section" style="background: var(--primary-color); color: white;">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center;">
+          <div>
+            <div style="width: 150px; height: 150px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">J</div>
+          </div>
+          <div>
+            <h1 style="font-size: 2.5rem; color: white;">Jane Smith</h1>
+            <p style="font-size: 1.2rem; color: white;">LibraryPal Customer</p>
+            <div style="display: flex; gap: 2rem;">
+              <div><p>Member Since</p><p style="font-size: 1.5rem; font-weight: 700;">January 2026</p></div>
+              <div><p>Books Borrowed</p><p style="font-size: 1.5rem; font-weight: 700;">8</p></div>
+              <div><p>Reviews</p><p style="font-size: 1.5rem; font-weight: 700;">5</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <main style="grid-column: span 2;">
+            <section class="card" style="margin-bottom: 2rem;">
+              <div class="card-header"><h2>Contact Information</h2></div>
+              <div class="card-content">
+                <p>Email</p><p><strong>jane.smith@email.com</strong></p>
+                <br>
+                <p>Phone</p><p><strong>(336) 555-0142</strong></p>
+                <br>
+                <p>Preferred Library</p><p><strong>Greensboro Community Library</strong></p>
+              </div>
+            </section>
+
+            <section class="card" style="margin-bottom: 2rem;">
+              <div class="card-header"><h2>Current Book Requests</h2></div>
+              <div class="card-content">
+                <div style="padding: 1rem; border-bottom: 1px solid var(--light-gray);">
+                  <h3>The Great Gatsby</h3><p>Requested: June 20, 2026</p><p>Pickup Date: June 24, 2026</p>
+                  <span class="session-status status-upcoming">Ready for Pickup</span>
+                </div>
+                <div style="padding: 1rem;">
+                  <h3>No Longer Human</h3><p>Requested: June 21, 2026</p><p>Pickup Date: June 27, 2026</p>
+                  <span class="session-status status-upcoming">Pending</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card-header"><h2>Recently Borrowed Books</h2></div>
+              <div class="card-content">
+                <div style="padding: 1rem; border-bottom: 1px solid var(--light-gray);"><strong>1984</strong><p>Borrowed May 10, 2026</p><p>Returned May 24, 2026</p></div>
+                <div style="padding: 1rem; border-bottom: 1px solid var(--light-gray);"><strong>The Hobbit</strong><p>Borrowed April 15, 2026</p><p>Returned April 29, 2026</p></div>
+                <div style="padding: 1rem;"><strong>Project Hail Mary</strong><p>Borrowed March 2, 2026</p><p>Returned March 16, 2026</p></div>
+              </div>
+            </section>
+          </main>
+
+          <aside>
+            <section class="card" style="margin-bottom: 2rem;">
+              <div class="card-header"><h2>Customer Status</h2></div>
+              <div class="card-content"><p>Current Status</p><p style="display: inline-block; background: var(--success-light); color: var(--success-color); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">Active</p></div>
+            </section>
+
+            <section class="card" style="margin-bottom: 2rem;">
+              <div class="card-header"><h2>Recent Review</h2></div>
+              <div class="card-content"><p>⭐⭐⭐⭐⭐ 5/5</p><p>"The pickup process was quick and easy. The library had my book ready when I arrived."</p></div>
+            </section>
+
+            <section class="card">
+              <div class="card-header"><h2>Actions</h2></div>
+              <div class="card-content">
+                <button class="btn btn-primary" onclick="alert('Request management opened')">Manage Requests</button>
+                <br><br>
+                <button class="btn btn-outline" onclick="alert('Customer message opened')">Contact Customer</button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <footer><p>&copy; 2026 LibraryPal. All rights reserved.</p></footer>
+  </div>
 </body>
 </html>

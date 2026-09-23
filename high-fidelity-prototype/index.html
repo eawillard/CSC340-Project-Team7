@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>LibraryPal</title>
 </head>
 
-<main?>
+<main>
     <!-- Navigation -->
     <nav>
         <div class="container">
@@ -39,7 +40,7 @@
 
 
         <!-- Provider registration -->
-        <a href="provider-dashboard.html">
+        <a href="provider/provider-dashboard.html">
             Sign In as a Provider </a>
       </div>
     </section>
@@ -52,30 +53,37 @@
 
             <div class="library-cards">
                 <article class="library-card" id="greensboro-central-library">
+                    <img src="images/Central-Library.png"
+                       alt="Greensboro Central Library">
+
                     <h3>Greensboro Central Library</h3>
                     <p>219 North Church Street<br>Greensboro, NC</p>
                     <p><strong>Services:</strong> Book pickup, drop-off, community programs</p>
                     <p><strong>Available books:</strong> 1,240</p>
-                    <p><strong>Featured titles:</strong> Fiction, biographies, and children's books</p>
+                    <p><strong>Featured genres:</strong> Fiction, biographies, and children's books</p>
                     <a href="customer/library-details.html?library=greensboro-central">Browse books and connect</a>
                 </article>
 
-                <article class="library-card" id="glenwood-community-library">
-                    <h3>Glenwood Community Library</h3>
-                    <p>2107 West Friendly Avenue<br>Greensboro, NC</p>
+                <article class="library-card" id="glenwood-branch-library">
+                     <img src="images/Glenwood-lib.png"
+                           alt="Glenwood Community Library">
+                    <h3>Glenwood Branch Library</h3>
+                    <p>1901 W. Florida St.<br>Greensboro, NC</p>
                     <p><strong>Services:</strong> Book pickup, book requests, reading programs</p>
                     <p><strong>Available books:</strong> 875</p>
-                    <p><strong>Featured titles:</strong> Mystery, romance, and young adult books</p>
-                    <a href="customer/library-details.html?library=glenwood-community">Browse books and connect</a>
+                    <p><strong>Featured genres:</strong> Mystery, romance, and young adult books</p>
+                    <a href="customer/library-details.html?library=glenwood-branch">Browse books and connect</a>
                 </article>
 
-                <article class="library-card" id="benjamin-branch-library">
-                    <h3>Benjamin Branch Library</h3>
+                <article class="library-card" id="benjamin-public-library">
+                      <img src="images/Benjamin-Library.png"
+                       alt="Benjamin Branch Library">
+                    <h3>Benjamin Public Library</h3>
                     <p>1530 Benjamin Parkway<br>Greensboro, NC</p>
                     <p><strong>Services:</strong> Book pickup, drop-off, community events</p>
                     <p><strong>Available books:</strong> 963</p>
-                    <p><strong>Featured titles:</strong> Nonfiction, history, and educational books</p>
-                    <a href="customer/library-details.html?library=benjamin-branch">Browse books and connect</a>
+                    <p><strong>Featured genres:</strong> Nonfiction, history, and educational books</p>
+                    <a href="customer/library-details.html?library=benjamin-public">Browse books and connect</a>
                 </article>
             </div>
         </div>
@@ -118,7 +126,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 LibraryPal. Connecting readers with local libraries.All rights reserved.</p>
+            <p>&copy; 2026 LibraryPal. All rights reserved. Making strong connections between readers and community libraries.</p>
         </div>
     </footer>
 </body>
