@@ -3,23 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
     <title>My Profile - LibraryPal</title>
 </head>
 <body>
-    <header>
+
+<header>
     <h1>LibraryPal</h1>
 
     <nav>
         <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="browse-books.html">Browse Books</a></li>
-            <li><a href="find-library.html">Find a Library</a></li>
-            <li><a href="requests.html">My Books</a></li>
+            <li><a href="../index.html#local-libraries">Find a Library</a></li>
+            <li><a href="requests.html">My Requests</a></li>
             <li><a href="profile.html">My Profile</a></li>
-            <li><a href="../login.html">Login</a></li>
+            <li><a href="../login.html">Logout</a></li>
         </ul>
     </nav>
 </header>
 
+<main>
+
+    <h2>My Profile</h2>
+
+    <section>
+        <h3>Personal Information</h3>
+
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Email:</strong> john@example.com</p>
+        <p><strong>Phone:</strong> (336) 555-0123</p>
+
+        <button type="button">Edit Profile</button>
+    </section>
+
+    <section>
+        <h3>My Library</h3>
+
+        <p><strong>Connected Library:</strong> Greensboro Central Library</p>
+        <p>
+            Your connected library is used to help you find available books
+            and manage your requests.
+        </p>
+
+        <a href="library-details.html">View Library</a>
+        <button type="button">Change Library</button>
+    </section>
+
+    <section>
+        <h3>My Activity</h3>
+
+        <ul>
+            <li><strong>Current Requests:</strong> 1</li>
+            <li><strong>Completed Pickups:</strong> 3</li>
+            <li><strong>Reviews Written:</strong> 2</li>
+        </ul>
+
+        <a href="requests.html">View My Requests</a>
+    </section>
+
+    <section>
+        <h3>Account Settings</h3>
+
+        <p>Manage your account information and login settings.</p>
+
+        <button type="button">Change Password</button>
+        <button type="button">Edit Account Information</button>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 LibraryPal</p>
+</footer>
 
 </body>
 </html>
