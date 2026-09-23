@@ -1,0 +1,17 @@
+[33m2e34d96[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mawillard-milestone2[m[33m, [m[1;31morigin/awillard-milestone2[m[33m)[m HEAD@{0}: commit: updated style.css, minor changes for compatability
+[33m4ba8cc7[m HEAD@{1}: commit: small fix to index
+[33mc1d3115[m HEAD@{2}: commit: updated code for provider and began work on style
+[33mb805934[m HEAD@{3}: pull origin main: Fast-forward
+[33m2f814ff[m HEAD@{4}: pull origin main: Fast-forward
+[33md0e5d36[m HEAD@{5}: commit: Added folder for images, provider, and files for main pages and provider, created main index page
+[33m6a84a89[m[33m ([m[1;32mmain[m[33m)[m HEAD@{6}: checkout: moving from main to awillard-milestone2
+[33m6a84a89[m[33m ([m[1;32mmain[m[33m)[m HEAD@{7}: pull origin main: Fast-forward
+[33m7f3d9d7[m HEAD@{8}: checkout: moving from awillard-milestone1 to main
+[33m7f54e50[m[33m ([m[1;31morigin/awillard-milestone1[m[33m, [m[1;32mawillard-milestone1[m[33m)[m HEAD@{9}: commit: Added provider user stories and other information to SRS
+[33m7f3d9d7[m HEAD@{10}: checkout: moving from main to awillard-milestone1
+[33m7f3d9d7[m HEAD@{11}: pull origin main: Fast-forward
+[33m8ec3ab3[m HEAD@{12}: checkout: moving from awillard to main
+[33mca57af0[m[33m ([m[1;31morigin/awillard[m[33m, [m[1;32mawillard[m[33m)[m HEAD@{13}: commit: Added one photo and About Me.
+[33mae0849f[m HEAD@{14}: commit: Added one file and one photo.
+[33m8ec3ab3[m HEAD@{15}: checkout: moving from main to awillard
+[33m8ec3ab3[m HEAD@{16}: clone: from https://github.com/eawillard/CSC340-Project-Team7.git
