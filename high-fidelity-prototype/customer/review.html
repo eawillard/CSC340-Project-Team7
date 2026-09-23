@@ -1,42 +1,81 @@
-<div class="review-card">
-  <!-- Card Header -->
-  <h2 class="review-title">Write a Review for <span class="book-name">Bungo Stray Dogs Vol. 1</span></h2>
-  
-  <form action="#" method="POST" class="review-form">
-    
-    <!-- Rating Section -->
-    <div class="rating-section">
-      <span class="section-label">Your Rating</span>
-      <div class="star-rating">
-        <input type="radio" id="star5" name="rating" value="5" required />
-        <label for="star5" title="5 stars">&#9733;</label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Write a Review - LibraryPal</title>
+</head>
 
-        <input type="radio" id="star4" name="rating" value="4" />
-        <label for="star4" title="4 stars">&#9733;</label>
+<body>
+    <header>
+        <h1>LibraryPal</h1>
 
-        <input type="radio" id="star3" name="rating" value="3" />
-        <label for="star3" title="3 stars">&#9733;</label>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="browse-books.html">Browse Books</a></li>
+                <li><a href="../index.html#local-libraries">Find a Library</a></li>
+                <li><a href="requests.html">My Requests</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+                <li><a href="../login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <input type="radio" id="star2" name="rating" value="2" />
-        <label for="star2" title="2 stars">&#9733;</label>
+    <main>
+        <div class="review-card">
+            <h2 class="review-title">
+                Write a Review for
+                <span class="book-name">Bungo Stray Dogs Vol. 1</span>
+            </h2>
 
-        <input type="radio" id="star1" name="rating" value="1" />
-        <label for="star1" title="1 star">&#9733;</label>
-      </div>
-    </div>
+            <form action="#" method="POST" class="review-form">
 
-    <!-- Text Review Section -->
-    <div class="text-section">
-      <label for="review-text" class="section-label">Your Review</label>
-      <textarea 
-        id="review-text" 
-        name="reviewText" 
-        rows="5" 
-        placeholder="What did you think of the book? Share your thoughts..." 
-        required></textarea>
-    </div>
+                <div class="rating-section">
+                    <span class="section-label">Your Rating</span>
 
-    <!-- Submit Button -->
-    <button onclick="alert('Review submitted.')">Submit Review</button>
-  </form>
-</div>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" required>
+                        <label for="star5" title="5 stars">&#9733;</label>
+
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="4 stars">&#9733;</label>
+
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="3 stars">&#9733;</label>
+
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="2 stars">&#9733;</label>
+
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="1 star">&#9733;</label>
+                    </div>
+                </div>
+
+                <div class="text-section">
+                    <label for="review-text" class="section-label">
+                        Your Review
+                    </label>
+
+                    <textarea
+                        id="review-text"
+                        name="reviewText"
+                        rows="5"
+                        placeholder="What did you think of the book? Share your thoughts..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" onclick="alert('Review submitted.')">
+                    Submit Review
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 LibraryPal</p>
+    </footer>
+</body>
+</html>
