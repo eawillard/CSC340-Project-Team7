@@ -3,86 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="../styles.css">
     <title>Manage Books | LibraryPal</title>
 </head>
 <body class="app-page">
-    <header>
-    <nav>
-        <a href="../index.html">LibraryPal</a>
+    <div class="container">
 
-        <ul>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="manage-books.html">My Books</a></li>
-            <li><a href="view-members.html">Members</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="../login.html">Logout</a></li>
-        </ul>
-    </nav>
-</header>
+        <!-- Navigation -->
+        <nav>
+            <div class="navbar">
+                <a href="../index.html" class="navbar-brand">LibraryPal</a>
+                <ul class="nav-links">
+                   <li><a href="dashboard.html">Dashboard</a></li>
+                  <li><a href="manage-books.html">Manage Books</a></li>
+                   <li><a href="view-customers.html">View Members</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                   <li><a href="../login.html" class="btn btn-outline">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
 
-<main>
+        <main>
 
-    <section>
-        <h1>Manage Your Books</h1>
-        <p>Add, edit, and manage books in your library.</p>
-    </section>
+            <section>
+                <h1>Manage Your Books</h1>
+                <p>Add, edit, and manage books in your library collection.</p>
+            </section>
 
-    <section>
-        <h2>Library Collection</h2>
+            <!-- Books -->
+            <section>
 
-        <a href="new-book.html">+ Add New Book</a>
+                <div>
+                    <h2>Your Library Collection</h2>
+                    <a href="new-book.html">+ Add New Book</a>
+                </div>
 
-        <article>
-            <h3>The Great Gatsby</h3>
-            <p>Author: F. Scott Fitzgerald</p>
-            <p>ISBN: 9780743273565</p>
-            <p>Category: Fiction</p>
-            <p>Status: Available</p>
+                <!-- Book 1 -->
+                <article>
 
-            <a href="edit-book.html">Edit</a>
-            <button>Remove</button>
-        </article>
+                    <h3>The Great Gatsby</h3>
 
-        <article>
-            <h3>No Longer Human</h3>
-            <p>Author: Osamu Dazai</p>
-            <p>ISBN: 9780811220071</p>
-            <p>Category: Fiction</p>
-            <p>Status: Checked Out</p>
+                    <p><strong>Author:</strong> F. Scott Fitzgerald</p>
+                    <p><strong>ISBN:</strong> 9780743273565</p>
+                    <p><strong>Category:</strong> Fiction</p>
+                    <p><strong>Copies:</strong> 3</p>
+                    <p><strong>Status:</strong> Available</p>
+                    <p><strong>Description:</strong> A classic novel about wealth, love, and the American Dream.</p>
+                    <a href="edit-book.html">Edit</a>
+                    <button type="button">Remove</button>
 
-            <a href="edit-book.html">Edit</a>
-            <button>Remove</button>
-        </article>
+                </article>
 
-        <article>
-            <h3>1984</h3>
-            <p>Author: George Orwell</p>
-            <p>ISBN: 9780451524935</p>
-            <p>Category: Science Fiction</p>
-            <p>Status: Available</p>
+                <hr>
 
-            <a href="edit-book.html">Edit</a>
-            <button>Remove</button>
-        </article>
+                <!-- Book 2 -->
+                <article>
 
-        <article>
-            <h3>The Hobbit</h3>
-            <p>Author: J.R.R. Tolkien</p>
-            <p>ISBN: 9780547928227</p>
-            <p>Category: Fantasy</p>
-            <p>Status: Available</p>
+                    <h3>No Longer Human</h3>
 
-            <a href="edit-book.html">Edit</a>
-            <button>Remove</button>
-        </article>
+                    <p><strong>Author:</strong> Osamu Dazai</p>
+                    <p><strong>ISBN:</strong> 9780811220071</p>
+                    <p><strong>Category:</strong> Fiction</p>
+                    <p><strong>Copies:</strong> 1</p>
+                    <p><strong>Status:</strong> Checked Out</p>
+                    <p><strong>Description:</strong> A semi-autobiographical novel exploring themes of alienation and identity in post-war Japan.</p>
+                    <a href="edit-book.html">Edit</a>
+                    <button type="button">Remove</button>
 
-    </section>
+                </article>
 
-</main>
+                <hr>
 
-<footer>
-    <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-</footer>
+                <!-- Book 3 -->
+                <article>
+
+                    <h3>1984</h3>
+
+                    <p><strong>Author:</strong> George Orwell</p>
+                    <p><strong>ISBN:</strong> 9780451524935</p>
+                    <p><strong>Category:</strong> Science Fiction</p>
+                    <p><strong>Copies:</strong> 5</p>
+                    <p><strong>Status:</strong> Available</p>
+                    <p><strong>Description:</strong> A dystopian novel exploring government surveillance and individual freedom.</p>
+                    <a href="edit-book.html">Edit</a>
+                    <button type="button">Remove</button>
+
+                </article>
+
+                <hr>
+
+                <!-- Book 4 -->
+                <article>
+
+                    <h3>The Hobbit</h3>
+
+                    <p><strong>Author:</strong> J.R.R. Tolkien</p>
+                    <p><strong>ISBN:</strong> 9780547928227</p>
+                    <p><strong>Category:</strong> Fantasy</p>
+                    <p><strong>Copies:</strong> 2</p>
+                    <p><strong>Status:</strong> Available</p>
+                    <p><strong>Description:</strong> A fantasy adventure following Bilbo Baggins on an unexpected journey.</p>
+                    <a href="edit-book.html">Edit</a>
+                    <button type="button">Remove</button>
+
+                </article>
+
+                <hr>
+
+                <!-- Book 5 -->
+                <article>
+
+                    <h3>Project Hail Mary</h3>
+
+                    <p><strong>Author:</strong> Andy Weir</p>
+                    <p><strong>ISBN:</strong> 9780593135204</p>
+                    <p><strong>Category:</strong> Science Fiction</p>
+                    <p><strong>Copies:</strong> 4</p>
+                    <p><strong>Status:</strong> Available</p>
+                    <p><strong>Description:</strong> A science fiction novel about a lone astronaut's mission to save humanity.</p> 
+                    <a href="edit-book.html">Edit</a>
+                    <button type="button">Remove</button>
+                </article>
+            </section>
+
+            <!-- Library Statistics -->
+            <section>
+                <h2>Library Statistics</h2>
+                <div><h3>Total Books</h3><p>245</p></div>
+                <div><h3>Books Available</h3><p>213</p></div>
+                <div><h3>Books Checked Out</h3><p>32</p></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
