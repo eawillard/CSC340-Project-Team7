@@ -15,6 +15,12 @@ public class CoordinatorService {
     }
 
     public Coordinator createCoordinator(Coordinator coordinator) {
+        if (coordinatorRepository.existsByEmail(coordinator.getEmail())) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    org.springframework.http.HttpStatus.CONFLICT,
+                    "Email already exists"
+            );
+        }
         return coordinatorRepository.save(coordinator);
     }
 
