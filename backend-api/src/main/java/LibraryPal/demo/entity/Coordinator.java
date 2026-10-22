@@ -2,6 +2,7 @@ package LibraryPal.demo.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity 
 public class Coordinator {
@@ -14,10 +15,12 @@ public class Coordinator {
 
     @NotBlank
     @Email
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank
+    @Column(nullable = false)
     private String password;
 
     @NotBlank
