@@ -19,7 +19,6 @@ public class LocalLibraryController {
     public LocalLibraryController(LocalLibraryService service) {
         this.service = service;
     }
-
     @PostMapping
     public ResponseEntity<LocalLibrary> create(
             @Valid @RequestBody LocalLibraryRequest body) {
@@ -30,17 +29,14 @@ public class LocalLibraryController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.create(library));
     }
-
     @GetMapping
     public List<LocalLibrary> getAll() {
         return service.getAll();
     }
-
     @GetMapping("/{id}")
     public LocalLibrary getById(@PathVariable Long id) {
         return service.getById(id);
     }
-
     @PutMapping("/{id}")
     public LocalLibrary update(
             @PathVariable Long id,
@@ -51,7 +47,6 @@ public class LocalLibraryController {
 
         return service.update(id, library);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
