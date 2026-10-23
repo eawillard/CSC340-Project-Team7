@@ -29,39 +29,30 @@ public class Media {
 
     public Media() {
     }
-
     public Long getId() {
         return id;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
-
     public boolean isAvailable() {
         return available;
     }
-
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
     public LocalLibrary getLocalLibrary() {
         return localLibrary;
     }
-
     public void setLocalLibrary(LocalLibrary localLibrary) {
         this.localLibrary = localLibrary;
     }

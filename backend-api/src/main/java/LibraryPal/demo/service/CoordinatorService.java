@@ -15,8 +15,15 @@ import java.util.Optional;
 
 @Service
 public class CoordinatorService {
+private final CoordinatorRepository coordinatorRepository;
+    private final ServiceRequestRepository serviceRequestRepository;
 
-
+    public CoordinatorService(
+            CoordinatorRepository coordinatorRepository,
+            ServiceRequestRepository serviceRequestRepository) {
+        this.coordinatorRepository = coordinatorRepository;
+        this.serviceRequestRepository = serviceRequestRepository;
+    }
     public Coordinator createCoordinator(Coordinator coordinator) {
         if (coordinatorRepository.existsByEmail(coordinator.getEmail())) {
             throw new ResponseStatusException(
@@ -27,7 +34,6 @@ public class CoordinatorService {
 
         return coordinatorRepository.save(coordinator);
     }
-
     public List<Coordinator> getAllCoordinators() {
         return coordinatorRepository.findAll();
     }

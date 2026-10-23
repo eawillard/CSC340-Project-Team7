@@ -25,34 +25,26 @@ public class LocalLibrary {
     @OneToMany(mappedBy = "localLibrary")
     @JsonIgnore
     private List<Media> media = new ArrayList<>();
-
     public LocalLibrary() {
     }
-
     public Long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
-
     public List<Media> getMedia() {
         return media;
     }
-
     public void setMedia(List<Media> media) {
         this.media = media;
     }
