@@ -1,4 +1,8 @@
 package LibraryPal.demo.controller;
+
+import LibraryPal.demo.dto.CoordinatorCreateRequest;
+import LibraryPal.demo.dto.CoordinatorResponse;
+import LibraryPal.demo.dto.CoordinatorUpdateRequest;
 import LibraryPal.demo.entity.Coordinator;
 import LibraryPal.demo.service.CoordinatorService;
 
@@ -8,70 +12,85 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import LibraryPal.demo.dto.CoordinatorStatisticsResponse;
-import LibraryPal.demo.service.CoordinatorStatisticsService;
 
 @RestController
 @RequestMapping("/api/coordinators")
 public class CoordinatorController {
-     private final CoordinatorService coordinatorService;
 
-    // Create a coordinator profile
+    private final CoordinatorService coordinatorService;
+        public CoordinatorController(CoordinatorService coordinatorService) {
+        this.coordinatorService = coordinatorService;
+    }
+
     @PostMapping
-    public ResponseEntity<Coordinator> createCoordinator(
-            @Valid @RequestBody Coordinator coordinator) {
+    public ResponseEntity<CoordinatorResponse> createCoordinator(
+            @Valid @RequestBody CoordinatorCreateRequest body) {
+
+        Coordinator coordinator = new Coordinator();
+        coordinator.setName(body.name());
+        coordinator.setEmail(body.email());
+        coordinator.setPassword(body.password());
+        coordinator.setAccountStatus(body.accountStatus());
+
         Coordinator created =
                 coordinatorService.createCoordinator(coordinator);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CoordinatorResponse.from(created));
     }
 
-    // View all coordinator profiles
     @GetMapping
-    public List<Coordinator> getAllCoordinators() {
-        return coordinatorService.getAllCoordinators();
+    public List<CoordinatorResponse> getAllCoordinators() {
+        return coordinatorService.getAllCoordinators()
+                .stream()
+                .map(CoordinatorResponse::from)
+                .toList();
     }
 
-    // View one coordinator profile
     @GetMapping("/{id}")
-    public ResponseEntity<Coordinator> getCoordinatorById(
+    public CoordinatorResponse getCoordinatorById(
             @PathVariable Long id) {
         return coordinatorService.getCoordinatorById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(CoordinatorResponse::from)
+                .orElseThrow(() ->
+                        new org.springframework.web.server
+                                .ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Coordinator not found"));
     }
 
-    // Modify a coordinator profile
     @PutMapping("/{id}")
-    public ResponseEntity<Coordinator> updateCoordinator(
+    public CoordinatorResponse updateCoordinator(
             @PathVariable Long id,
-            @Valid @RequestBody Coordinator coordinator) {
-        return coordinatorService.updateCoordinator(id, coordinator)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            @Valid @RequestBody CoordinatorUpdateRequest body) {
+
+        Coordinator updated = new Coordinator();
+        updated.setName(body.name());
+        updated.setEmail(body.email());
+        updated.setPassword(body.password());
+        updated.setAccountStatus(body.accountStatus());
+
+        return coordinatorService.updateCoordinator(id, updated)
+                .map(CoordinatorResponse::from)
+                .orElseThrow(() ->
+                        new org.springframework.web.server
+                                .ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Coordinator not found"));
     }
 
-    // Remove a coordinator profile
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCoordinator(
             @PathVariable Long id) {
+
         if (!coordinatorService.deleteCoordinator(id)) {
-            return ResponseEntity.notFound().build();
+            throw new org.springframework.web.server
+                    .ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Coordinator not found");
         }
 
         return ResponseEntity.noContent().build();
     }
-    private final CoordinatorStatisticsService statisticsService;
-    public CoordinatorController(
-        CoordinatorService coordinatorService,
-        CoordinatorStatisticsService statisticsService) {
-        this.coordinatorService = coordinatorService;
-        this.statisticsService = statisticsService;
-    }
-    @GetMapping("/{id}/statistics")
-    public CoordinatorStatisticsResponse getStatistics(
-        @PathVariable Long id) {
-    return statisticsService.getStatistics(id);
-}
 
 }
