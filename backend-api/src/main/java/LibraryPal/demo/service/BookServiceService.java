@@ -26,13 +26,11 @@ public class BookServiceService {
     public List<BookService> findAll() {
         return bookServiceRepository.findAll();
     }
-
     public BookService findById(Long id) {
         return bookServiceRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Book service not found"));
     }
-
     @Transactional
     public BookService create(Long customerId, String serviceName, String description) {
         Customer customer = customerRepository.findById(customerId)
@@ -46,7 +44,6 @@ public class BookServiceService {
 
         return bookServiceRepository.save(bookService);
     }
-
     @Transactional
     public BookService update(
             Long id, Long customerId, String serviceName, String description) {
@@ -67,7 +64,6 @@ public class BookServiceService {
 
         return bookServiceRepository.save(bookService);
     }
-
     @Transactional
     public void delete(Long id, Long customerId) {
         BookService bookService = findById(id);
