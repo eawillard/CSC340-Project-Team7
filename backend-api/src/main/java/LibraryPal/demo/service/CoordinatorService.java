@@ -34,7 +34,6 @@ private final CoordinatorRepository coordinatorRepository;
 
         return coordinatorRepository.save(coordinator);
     }
-
     public List<Coordinator> getAllCoordinators() {
         return coordinatorRepository.findAll();
     }
