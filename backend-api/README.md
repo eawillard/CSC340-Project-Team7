@@ -1,5 +1,8 @@
 # LibraryPal Backend API Documentation
 
+**Live Backend API:** [LibraryPal Backend](https://csc340-project-team7.onrender.com/)
+
+
 ## UML Class Diagram
 
 ![LibraryPal UML Class Diagram](../doc/uml-class-diagram.png)
