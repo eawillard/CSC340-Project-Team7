@@ -32,8 +32,7 @@ public class Review {
     @JsonIgnore
     private Customer customer;
 
-    public Review() {
-    }
+    public Review() {}
 
     public Long getId() {
         return id;
