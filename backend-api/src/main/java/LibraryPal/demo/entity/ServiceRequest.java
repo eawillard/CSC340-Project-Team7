@@ -44,58 +44,44 @@ public class ServiceRequest {
         status = "PENDING";
     }
     }
-
     public ServiceRequest() {
     }
-
     public Long getId() {
         return id;
     }
-
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
-
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
-
     public LocalDate getScheduleDate() {
         return scheduleDate;
     }
-
     public void setScheduleDate(LocalDate scheduleDate) {
         this.scheduleDate = scheduleDate;
     }
-
     public LocalDate getDateAdded() {
         return dateAdded;
     }
-
     public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
     }
-
     public String getRequestType() {
         return requestType;
     }
-
     public void setRequestType(String requestType) {
         this.requestType = requestType;
     }
-
     public BookService getBookService() {
     return bookService;
     }
-
     public void setBookService(BookService bookService) {
     this.bookService = bookService;
     }

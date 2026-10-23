@@ -42,7 +42,6 @@ public static class RequestReschedule {
         this.scheduleDate = scheduleDate;
     }
     }
-
     private final ServiceRequestService service;
 
     public ServiceRequestController(ServiceRequestService service) {
@@ -66,19 +65,16 @@ public static class RequestReschedule {
     public List<ServiceRequest> getAllRequests() {
         return service.getAllRequests();
     }
-
     @GetMapping("/{id}")
     public ServiceRequest getRequestById(@PathVariable Long id) {
         return service.getRequestById(id);
     }
-
     @PutMapping("/{id}/status")
     public ServiceRequest updateStatus(
             @PathVariable Long id,
             @Valid @RequestBody RequestStatusUpdate body) {
         return service.updateRequestStatus(id, body.getStatus());
     }
-
     @PutMapping("/{id}/reschedule")
     public ServiceRequest reschedule(
             @PathVariable Long id,
@@ -86,12 +82,10 @@ public static class RequestReschedule {
         return service.rescheduleRequest(
                 id, body.getScheduleDate());
     }
-
     @PutMapping("/{id}/cancel")
     public ServiceRequest cancel(@PathVariable Long id) {
         return service.cancelRequest(id);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
         service.deleteRequest(id);
