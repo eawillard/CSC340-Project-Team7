@@ -1,4 +1,4 @@
-package dto;
+package LibraryPal.demo.dto;
 
 import LibraryPal.demo.entity.Coordinator;
 
