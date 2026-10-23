@@ -65,6 +65,22 @@ public class ApiExceptionHandler {
         return error(status, message);
     }
 
+        // Handle requests for resources that do not exist
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(
+            IllegalArgumentException exception) {
+
+        String message = exception.getMessage() != null
+                ? exception.getMessage()
+                : "Invalid request.";
+
+        HttpStatus status = message.contains("not found")
+                ? HttpStatus.NOT_FOUND
+                : HttpStatus.BAD_REQUEST;
+
+        return error(status, message);
+    }
+
     // Create a consistent JSON error response
     private ResponseEntity<Map<String, String>> error(
             HttpStatus status, String message) {
