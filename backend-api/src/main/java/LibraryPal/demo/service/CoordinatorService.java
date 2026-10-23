@@ -1,10 +1,20 @@
 package LibraryPal.demo.service;
 import LibraryPal.demo.entity.Coordinator;
 import LibraryPal.demo.repository.CoordinatorRepository;
-import org.springframework.stereotype.Service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import LibraryPal.demo.repository.ServiceRequestRepository;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 @Service
 public class CoordinatorService {
@@ -57,4 +67,20 @@ public class CoordinatorService {
         coordinatorRepository.deleteById(id);
         return true;
     }
+    public Map<String, Long> getStatistics(Long coordinatorId) {
+    if (!coordinatorRepository.existsById(coordinatorId)) {
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Coordinator not found");
+    }
+
+    Map<String, Long> stats = new LinkedHashMap<>();
+
+    stats.put("totalRequests", serviceRequestRepository.count());
+    stats.put("pending", serviceRequestRepository.countByStatusIgnoreCase("PENDING"));
+    stats.put("approved", serviceRequestRepository.countByStatusIgnoreCase("APPROVED"));
+    stats.put("completed", serviceRequestRepository.countByStatusIgnoreCase("COMPLETED"));
+    stats.put("cancelled", serviceRequestRepository.countByStatusIgnoreCase("CANCELLED"));
+
+    return stats;
+}
 }
