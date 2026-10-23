@@ -8,15 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import LibraryPal.demo.dto.CoordinatorStatisticsResponse;
+import LibraryPal.demo.service.CoordinatorStatisticsService;
 
 @RestController
 @RequestMapping("/api/coordinators")
 public class CoordinatorController {
      private final CoordinatorService coordinatorService;
-
-    public CoordinatorController(CoordinatorService coordinatorService) {
-        this.coordinatorService = coordinatorService;
-    }
 
     // Create a coordinator profile
     @PostMapping
@@ -63,4 +61,17 @@ public class CoordinatorController {
 
         return ResponseEntity.noContent().build();
     }
+    private final CoordinatorStatisticsService statisticsService;
+    public CoordinatorController(
+        CoordinatorService coordinatorService,
+        CoordinatorStatisticsService statisticsService) {
+        this.coordinatorService = coordinatorService;
+        this.statisticsService = statisticsService;
+    }
+    @GetMapping("/{id}/statistics")
+    public CoordinatorStatisticsResponse getStatistics(
+        @PathVariable Long id) {
+    return statisticsService.getStatistics(id);
+}
+
 }

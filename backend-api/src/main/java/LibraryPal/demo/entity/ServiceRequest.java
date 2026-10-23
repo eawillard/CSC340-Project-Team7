@@ -31,6 +31,16 @@ public class ServiceRequest {
     @Column(nullable = false)
     private String requestType;
 
+    @PrePersist
+    protected void onCreate() {
+    if (dateAdded == null) {
+        dateAdded = LocalDate.now();
+    }
+    if (status == null || status.isBlank()) {
+        status = "PENDING";
+    }
+    }
+
     public ServiceRequest() {
     }
 
