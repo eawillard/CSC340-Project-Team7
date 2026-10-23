@@ -131,16 +131,8 @@ Example endpoint: `PUT /api/reviews/2`
 
 ## Deployment
 
-**Live Backend API:** [LibraryPal Backend](PASTE_ToniR_ACTUAL_RENDER_URL_HERE)
+**Live Backend API:** [LibraryPal Backend](https://csc340-project-team7.onrender.com/)
 
-
-For example, if Tonir actual Render URL is `https://Tonir-service.onrender.com`, the Markdown would be:
-
-```markdown
-**Live Backend API:** [LibraryPal Backend](https://Tonir-service.onrender.com)
-```
-
-The example URL above is only a placeholder; do not submit it as Tonir actual deployment URL.
 
 ### Cold-Start Note
 
