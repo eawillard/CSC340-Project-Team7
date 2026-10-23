@@ -5,7 +5,7 @@
 
 ## UML Class Diagram
 
-![LibraryPal UML Class Diagram](../doc/uml-class-diagram.png)
+![LibraryPal UML Class Diagram](../docs/uml-class-diagram.png)
 
 
 
