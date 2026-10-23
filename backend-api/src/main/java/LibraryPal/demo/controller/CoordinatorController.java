@@ -5,7 +5,8 @@ import LibraryPal.demo.dto.CoordinatorResponse;
 import LibraryPal.demo.dto.CoordinatorUpdateRequest;
 import LibraryPal.demo.entity.Coordinator;
 import LibraryPal.demo.service.CoordinatorService;
-
+import LibraryPal.demo.dto.CoordinatorStatisticsResponse;
+import LibraryPal.demo.service.CoordinatorStatisticsService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,13 @@ import java.util.List;
 public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
-        public CoordinatorController(CoordinatorService coordinatorService) {
-        this.coordinatorService = coordinatorService;
-    }
+        public CoordinatorController(
+        CoordinatorService coordinatorService,
+        CoordinatorStatisticsService statisticsService) {
+    this.coordinatorService = coordinatorService;
+    this.statisticsService = statisticsService;
+}
+private final CoordinatorStatisticsService statisticsService;
 
     @PostMapping
     public ResponseEntity<CoordinatorResponse> createCoordinator(
@@ -92,5 +97,10 @@ public class CoordinatorController {
 
         return ResponseEntity.noContent().build();
     }
-
+    @GetMapping("/{id}/statistics")
+public CoordinatorStatisticsResponse getStatistics(
+        @PathVariable Long id) {
+    return statisticsService.getStatistics(id);
+}
+    
 }
