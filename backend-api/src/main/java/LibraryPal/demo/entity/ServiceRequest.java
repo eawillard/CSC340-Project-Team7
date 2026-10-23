@@ -7,6 +7,10 @@ import java.time.LocalDate;
 
 @Entity
 public class ServiceRequest {
+    @ManyToOne
+    @JoinColumn(name = "book_service_id")
+    private BookService bookService;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -86,6 +90,14 @@ public class ServiceRequest {
 
     public void setRequestType(String requestType) {
         this.requestType = requestType;
+    }
+
+    public BookService getBookService() {
+    return bookService;
+    }
+
+    public void setBookService(BookService bookService) {
+    this.bookService = bookService;
     }
 }
     
