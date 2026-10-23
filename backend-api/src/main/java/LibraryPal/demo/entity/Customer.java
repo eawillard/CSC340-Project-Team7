@@ -3,6 +3,9 @@ package LibraryPal.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -22,6 +25,14 @@ public class Customer {
     @NotBlank
     @Column(nullable = false, unique = true)
     private String username;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<BookService> bookServices = new ArrayList<>();
 
     public Customer() {
     }
