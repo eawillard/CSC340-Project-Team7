@@ -28,6 +28,7 @@ public class BookService {
     @JsonIgnore
     private Customer customer;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bookService")
     private List<ServiceRequest> requests = new ArrayList<>();
 

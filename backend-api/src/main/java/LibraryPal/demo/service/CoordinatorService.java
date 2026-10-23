@@ -18,11 +18,15 @@ import java.util.LinkedHashMap;
 
 @Service
 public class CoordinatorService {
-     private final CoordinatorRepository coordinatorRepository;
+private final CoordinatorRepository coordinatorRepository;
+private final ServiceRequestRepository serviceRequestRepository;
 
-    public CoordinatorService(CoordinatorRepository coordinatorRepository) {
-        this.coordinatorRepository = coordinatorRepository;
-    }
+public CoordinatorService(
+        CoordinatorRepository coordinatorRepository,
+        ServiceRequestRepository serviceRequestRepository) {
+    this.coordinatorRepository = coordinatorRepository;
+    this.serviceRequestRepository = serviceRequestRepository;
+}
 
     public Coordinator createCoordinator(Coordinator coordinator) {
         if (coordinatorRepository.existsByEmail(coordinator.getEmail())) {
