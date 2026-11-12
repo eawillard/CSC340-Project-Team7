@@ -22,6 +22,19 @@ public class LocalLibrary {
     @Column(nullable = false)
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "coordinator_id")
+    @JsonIgnore
+    private Coordinator coordinator;
+
+    public Coordinator getCoordinator() {
+    return coordinator;
+    }
+
+    public void setCoordinator(Coordinator coordinator) {
+    this.coordinator = coordinator;
+    }
+
     @OneToMany(mappedBy = "localLibrary")
     @JsonIgnore
     private List<Media> media = new ArrayList<>();
