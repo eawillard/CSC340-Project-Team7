@@ -1,0 +1,26 @@
+/* Extra styles for the customer pages (messages, small helpers) */
+.success-message {
+    background: #e6f4ea;
+    border: 1px solid #2e7d32;
+    color: #1b5e20;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 12px 0;
+}
+
+.error-message {
+    background: #fdecea;
+    border: 1px solid #c62828;
+    color: #b71c1c;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 12px 0;
+}
+
+.muted {
+    color: #666;
+}
+
+.inline-form {
+    display: inline;
+}

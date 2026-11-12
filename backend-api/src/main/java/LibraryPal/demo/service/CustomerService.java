@@ -55,4 +55,21 @@ public class CustomerService {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
     }
+
+    // Check a username/password pair for login. The same message is used
+    // for both failures so the page does not reveal which usernames exist.
+    public Customer authenticate(String username, String password) {
+        String name = username == null ? "" : username.trim();
+        String rawPassword = password == null ? "" : password;
+
+        Customer customer = customerRepository.findByUsername(name)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Invalid username or password"));
+
+        if (!passwordEncoder.matches(rawPassword, customer.getPassword())) {
+            throw new IllegalArgumentException("Invalid username or password");
+        }
+
+        return customer;
+    }
 }
