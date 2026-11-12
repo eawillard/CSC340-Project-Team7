@@ -1,4 +1,5 @@
 package LibraryPal.demo.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,18 @@ import java.time.LocalDate;
 
 @Entity
 public class ServiceRequest {
+    // The customer who made this pickup/drop-off request
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    private Customer customer;
+
+    // The book this request is for
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    @JsonIgnore
+    private Book book;
+
     @ManyToOne
     @JoinColumn(name = "book_service_id")
     private BookService bookService;
@@ -85,5 +98,16 @@ public class ServiceRequest {
     public void setBookService(BookService bookService) {
     this.bookService = bookService;
     }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public Book getBook() {
+        return book;
+    }
+    public void setBook(Book book) {
+        this.book = book;
+    }
 }
-    
