@@ -1,3 +1,4 @@
+
 package LibraryPal.demo.controller;
 
 import LibraryPal.demo.dto.MediaRequest;
@@ -20,16 +21,26 @@ public class MediaController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<Media> create(
-            @Valid @RequestBody MediaRequest body) {
+    private Media toEntity(MediaRequest body) {
         Media media = new Media();
         media.setTitle(body.getTitle());
+        media.setMediaType(body.getMediaType());
+        media.setCreator(body.getCreator());
+        media.setIsbn(body.getIsbn());
+        media.setCategory(body.getCategory());
+        media.setDescription(body.getDescription());
+        media.setCopies(body.getCopies());
         media.setLocation(body.getLocation());
         media.setAvailable(
                 body.getAvailable() == null || body.getAvailable());
+        return media;
+    }
 
-        Media created = service.create(media, body.getLibraryId());
+    @PostMapping
+    public ResponseEntity<Media> create(
+            @Valid @RequestBody MediaRequest body) {
+        Media created = service.create(
+                toEntity(body), body.getLibraryId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -50,8 +61,7 @@ public class MediaController {
     }
 
     @GetMapping("/library/{libraryId}")
-    public List<Media> getByLibrary(
-            @PathVariable Long libraryId) {
+    public List<Media> getByLibrary(@PathVariable Long libraryId) {
         return service.getByLibrary(libraryId);
     }
 
@@ -59,13 +69,8 @@ public class MediaController {
     public Media update(
             @PathVariable Long id,
             @Valid @RequestBody MediaRequest body) {
-        Media media = new Media();
-        media.setTitle(body.getTitle());
-        media.setLocation(body.getLocation());
-        media.setAvailable(
-                body.getAvailable() == null || body.getAvailable());
-
-        return service.update(id, media, body.getLibraryId());
+        return service.update(
+                id, toEntity(body), body.getLibraryId());
     }
 
     @DeleteMapping("/{id}")

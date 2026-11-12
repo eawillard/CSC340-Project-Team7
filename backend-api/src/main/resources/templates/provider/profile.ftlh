@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,8 @@
 
 <div class="container">
 
-    <#include "/fragments/provider-nav.ftlh">
+    <#include "/provider/provider-nav.ftlh">
+  
 
     <main>
 
