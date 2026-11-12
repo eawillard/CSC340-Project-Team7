@@ -4,130 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Edit Details | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
-
-    <title>Edit Provider Profile | LibraryPal</title>
 </head>
-
 <body class="app-page">
-
 <div class="container">
 
-    <#include "/fragments/provider-nav.ftlh">
+    <nav>
+        <div class="navbar">
+            <a href="/" class="navbar-brand">LibraryPal</a>
+            <ul class="nav-links">
+                <li><a href="/provider/profile">Profile</a></li>
+                <li><a href="/provider/edit-details">Edit Details</a></li>
+                <li><a href="/provider/register">Register Coordinator</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <main>
+        <h1>Edit Personal Information</h1>
+        <p>Update your LibraryPal account information.</p>
 
-        <section>
-            <h1>Edit Provider Profile</h1>
-            <p>Update your personal and library information.</p>
-        </section>
-
-        <#if errorMessage??>
-            <p class="error-message">${errorMessage}</p>
+        <#if error??>
+            <p class="error-message">${error}</p>
         </#if>
 
-        <section>
-            <div class="card">
-                <div class="card-content">
+        <form action="/provider/edit-details" method="post">
 
-                    <form method="post"
-                          action="/provider/profile/edit">
+            <#if _csrf??>
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+            </#if>
 
-                        <h2>Personal Information</h2>
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="${coordinator.name}"
+                required>
 
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="${coordinator.email}"
+                required>
 
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value="${coordinator.name?html}"
-                                required>
-                        </div>
+            <label for="password">New Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Leave blank to keep your current password">
 
-                        <div class="form-group">
-                            <label for="email">Email</label>
+            <button type="submit">Save Changes</button>
 
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value="${coordinator.email?html}"
-                                required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">
-                                New Password (optional)
-                            </label>
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Leave blank to keep current password">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="accountStatus">
-                                Account Status
-                            </label>
-
-                            <input
-                                type="text"
-                                id="accountStatus"
-                                name="accountStatus"
-                                value="${coordinator.accountStatus?html}"
-                                required>
-                        </div>
-
-                        <#if library??>
-                            <h2>Library Information</h2>
-
-                            <div class="form-group">
-                                <label for="libraryName">
-                                    Library Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="libraryName"
-                                    name="libraryName"
-                                    value="${library.name?html}"
-                                    required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="libraryAddress">
-                                    Library Address
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="libraryAddress"
-                                    name="libraryAddress"
-                                    value="${library.address?html}"
-                                    required>
-                            </div>
-                        </#if>
-
-                        <button type="submit" class="btn btn-primary">
-                            Save Changes
-                        </button>
-
-                        <a href="/provider/profile"
-                           class="btn btn-outline">
-                            Cancel
-                        </a>
-
-                    </form>
-
-                </div>
-            </div>
-        </section>
-
+            <a href="/provider/profile">Cancel</a>
+        </form>
     </main>
 
     <footer>
@@ -135,6 +69,5 @@
     </footer>
 
 </div>
-
 </body>
 </html>

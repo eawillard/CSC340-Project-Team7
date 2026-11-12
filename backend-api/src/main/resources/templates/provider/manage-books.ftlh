@@ -4,21 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
     <title>Manage Books | LibraryPal</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body class="app-page">
-
 <div class="container">
 
     <#include "/provider/provider-nav.ftlh">
 
     <main>
 
-        <section>
+        <section class="section">
             <h1>Manage Your Books</h1>
-            <p>Add, edit, and manage books in your library collection.</p>
+            <p>Add, edit, and manage books across your libraries.</p>
+
+            <a href="/provider/books/new" class="btn btn-primary">
+                + Add New Book
+            </a>
         </section>
 
         <#if successMessage??>
@@ -29,105 +32,145 @@
             <p class="error-message">${errorMessage}</p>
         </#if>
 
-        <section>
+        <section class="section">
+            <h2>Collection Statistics</h2>
 
-            <div>
-                <h2>Your Library Collection</h2>
-                <a href="/provider/books/new">+ Add New Book</a>
+            <div class="dashboard-grid">
+
+                <div class="stat-card">
+                    <div class="stat-number">${totalBooks!0}</div>
+                    <div class="stat-label">Book Records</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">${availableCopies!0}</div>
+                    <div class="stat-label">Available Copies</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">${checkedOutCopies!0}</div>
+                    <div class="stat-label">Checked Out Copies</div>
+                </div>
+
             </div>
+        </section>
 
-            <#if books?has_content>
+        <section class="section">
+            <h2>Your Library Collection</h2>
+
+            <#if books?? && books?has_content>
 
                 <#list books as book>
 
-                    <article>
+                    <article class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-content">
 
-                        <h3>${book.title?html}</h3>
+                            <h3>${book.title}</h3>
 
-                        <p>
-                            <strong>Author:</strong>
-                            ${book.author?html}
-                        </p>
+                            <p>
+                                <strong>Author:</strong>
+                                ${book.author}
+                            </p>
 
-                        <p>
-                            <strong>ISBN:</strong>
-                            ${book.isbn?html}
-                        </p>
+                            <p>
+                                <strong>ISBN:</strong>
+                                ${book.isbn}
+                            </p>
 
-                        <p>
-                            <strong>Category:</strong>
-                            ${book.genre?html}
-                        </p>
+                            <p>
+                                <strong>Genre:</strong>
+                                ${book.genre!'Not provided'}
+                            </p>
 
-                        <p>
-                            <strong>Copies:</strong>
-                            ${book.totalCopies}
-                        </p>
+                            <p>
+                                <strong>Publisher:</strong>
+                                ${book.publisher!'Not provided'}
+                            </p>
 
-                        <p>
-                            <strong>Status:</strong>
+                            <p>
+                                <strong>Publication Year:</strong>
+                                ${book.publicationYear!'Not provided'}
+                            </p>
 
-                            <#if book.availableCopies gt 0>
-                                Available
-                            <#else>
-                                Checked Out
-                            </#if>
-                        </p>
+                            <p>
+                                <strong>Library:</strong>
+                                ${book.localLibrary.name!'Not provided'}
+                            </p>
 
-                        <p>
-                            <strong>Description:</strong>
-                            ${book.description?html}
-                        </p>
+                            <p>
+                                <strong>Total Copies:</strong>
+                                ${book.totalCopies}
+                            </p>
 
-                        <a href="/provider/books/${book.id}/edit">
-                            Edit
-                        </a>
+                            <p>
+                                <strong>Available Copies:</strong>
+                                ${book.availableCopies}
+                            </p>
 
-                        <form method="post"
-                              action="/provider/books/${book.id}/delete"
-                              onsubmit="return confirm('Are you sure you want to remove this book?');">
+                            <p>
+                                <strong>Status:</strong>
 
-                            <button type="submit">
-                                Remove
-                            </button>
+                                <#if book.availableCopies gt 0>
+                                    <span class="success-message">Available</span>
+                                <#else>
+                                    <span class="error-message">Checked Out</span>
+                                </#if>
+                            </p>
 
-                        </form>
+                            <p>
+                                <strong>Location:</strong>
+                                ${book.location}
+                            </p>
 
+                            <p>
+                                <strong>Description:</strong>
+                                ${book.description}
+                            </p>
+
+                            <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+
+                                <a href="/provider/books/${book.id}/edit"
+                                   class="btn btn-primary">
+                                    Edit Book
+                                </a>
+
+                                <form method="post"
+                                      action="/provider/books/${book.id}/delete"
+                                      onsubmit="return confirm('Are you sure you want to delete this book?');">
+
+                                    <#if _csrf??>
+                                        <input type="hidden"
+                                               name="${_csrf.parameterName}"
+                                               value="${_csrf.token}">
+                                    </#if>
+
+                                    <button type="submit" class="btn btn-outline">
+                                        Delete Book
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
                     </article>
-
-                    <hr>
 
                 </#list>
 
             <#else>
 
-                <p>You haven't added any books yet.</p>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>No Books Yet</h3>
+                        <p>You haven't added any books to your collection.</p>
 
-                <a href="/provider/books/new">
-                    Add Your First Book
-                </a>
+                        <a href="/provider/books/new"
+                           class="btn btn-primary">
+                            Add Your First Book
+                        </a>
+                    </div>
+                </div>
 
             </#if>
-
-        </section>
-
-        <section>
-            <h2>Library Statistics</h2>
-
-            <div>
-                <h3>Total Book Records</h3>
-                <p>${totalBooks!0}</p>
-            </div>
-
-            <div>
-                <h3>Available Copies</h3>
-                <p>${availableCopies!0}</p>
-            </div>
-
-            <div>
-                <h3>Checked Out Copies</h3>
-                <p>${checkedOutCopies!0}</p>
-            </div>
         </section>
 
     </main>
@@ -137,6 +180,5 @@
     </footer>
 
 </div>
-
 </body>
 </html>
