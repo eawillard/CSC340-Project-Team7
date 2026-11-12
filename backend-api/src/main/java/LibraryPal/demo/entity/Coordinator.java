@@ -4,6 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity 
 public class Coordinator {
      @Id
@@ -25,6 +28,17 @@ public class Coordinator {
 
     @NotBlank
     private String accountStatus;
+
+    @OneToMany(mappedBy = "coordinator")
+    private List<LocalLibrary> libraries = new ArrayList<>();
+
+    public List<LocalLibrary> getLibraries() {
+    return libraries;
+    }
+
+    public void setLibraries(List<LocalLibrary> libraries) {
+    this.libraries = libraries;
+    }
 
     public Coordinator() {
     }
