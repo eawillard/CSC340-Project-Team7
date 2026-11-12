@@ -21,6 +21,7 @@ public class LocalLibraryService {
     public List<LocalLibrary> getAll() {
         return repository.findAll();
     }
+    
     public LocalLibrary getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -36,4 +37,7 @@ public class LocalLibraryService {
         LocalLibrary library = getById(id);
         repository.delete(library);
     }
+    public List<LocalLibrary> getByCoordinator(Long coordinatorId) {
+    return repository.findByCoordinatorId(coordinatorId);
+}
 }

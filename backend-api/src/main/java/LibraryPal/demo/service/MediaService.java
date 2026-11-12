@@ -1,3 +1,4 @@
+
 package LibraryPal.demo.service;
 
 import LibraryPal.demo.entity.LocalLibrary;
@@ -63,6 +64,12 @@ public class MediaService {
                         HttpStatus.NOT_FOUND, "Library not found"));
 
         media.setTitle(updated.getTitle());
+        media.setMediaType(updated.getMediaType());
+        media.setCreator(updated.getCreator());
+        media.setIsbn(updated.getIsbn());
+        media.setCategory(updated.getCategory());
+        media.setDescription(updated.getDescription());
+        media.setCopies(updated.getCopies());
         media.setLocation(updated.getLocation());
         media.setAvailable(updated.isAvailable());
         media.setLocalLibrary(library);
