@@ -37,7 +37,18 @@ public class Coordinator {
     }
 
     public void setLibraries(List<LocalLibrary> libraries) {
-    this.libraries = libraries;
+        this.libraries = libraries;
+    }
+
+    @OneToMany(mappedBy = "coordinator")
+    private List<Book> books = new ArrayList<>();
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public Coordinator() {

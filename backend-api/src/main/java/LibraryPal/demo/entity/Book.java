@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(
     uniqueConstraints = @UniqueConstraint(
-        columnNames = {"isbn", "local_library_id"}
+        columnNames = {"isbn", "coordinator_id"}
     )
 )
 public class Book {
@@ -57,9 +57,22 @@ public class Book {
     private String location;
 
     @ManyToOne
-    @JoinColumn(name = "local_library_id", nullable = false)
+    @JoinColumn(name = "local_library_id")
     @JsonIgnore
     private LocalLibrary localLibrary;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "coordinator_id", nullable = false)
+    @JsonIgnore
+    private Coordinator coordinator;
+
+    public Coordinator getCoordinator() {
+        return coordinator;
+    }
+
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
 
     public Book() {
     }
