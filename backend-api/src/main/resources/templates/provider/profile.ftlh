@@ -1,104 +1,95 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
+    <title>Provider Profile - LibraryPal</title>
 </head>
 
-<body class="app-page">
+<body>
 
-<div class="container">
+<header>
+    <h1>LibraryPal</h1>
+    <p>Provider Dashboard</p>
 
-    <!-- Navigation -->
     <nav>
-        <div class="navbar">
-            <a href="/" class="navbar-brand">LibraryPal</a>
-
-            <ul class="nav-links">
-                <li><a href="/provider/profile">Profile</a></li>
-                <li><a href="/provider/edit-details">Edit Details</a></li>
-                <li><a href="/provider/register">Register Coordinator</a></li>
-            </ul>
-        </div>
+        <a href="/provider/profile">Profile</a>
+        <a href="/provider/books">Manage Books</a>
+        <a href="/provider/edit-details">Edit Details</a>
+        <a href="/logout">Logout</a>
     </nav>
+</header>
 
-    <main>
+<main>
 
-        <!-- Profile Header -->
-        <section>
-            <h1>My Profile</h1>
-            <p>Manage your LibraryPal account information.</p>
+    <h2>Welcome, ${coordinator.name}!</h2>
 
-            <#if RequestParameters.updated??>
-                <p class="success-message">
-                    Your profile was successfully updated!
-                </p>
-            </#if>
+    <#if RequestParameters.updated??>
+        <p class="success-message">
+            Your profile has been updated successfully.
+        </p>
+    </#if>
 
-            <#if RequestParameters.accountDeleted??>
-                <p class="success-message">
-                    Your account has been deleted.
-                </p>
-            </#if>
-        </section>
+    <section>
+        <h3>Account Information</h3>
 
-        <!-- Personal Information -->
-        <section>
-            <h2>Personal Information</h2>
+        <p><strong>Name:</strong> ${coordinator.name}</p>
+        <p><strong>Email:</strong> ${coordinator.email}</p>
+        <p><strong>Account Status:</strong> ${coordinator.accountStatus}</p>
 
-            <article>
-                <h3>Personal Details</h3>
+        <a href="/provider/edit-details">
+            Edit Account Details
+        </a>
+    </section>
 
-                <p><strong>Name:</strong> ${coordinator.name}</p>
-                <p><strong>Email:</strong> ${coordinator.email}</p>
-                <p><strong>Account Status:</strong> ${coordinator.accountStatus}</p>
+    <section>
+        <h3>Your Libraries</h3>
 
-                <a href="/provider/edit-details">
-                    Edit Personal Information
-                </a>
-            </article>
-        </section>
+        <#if libraries?has_content>
 
-        <!-- Account Settings -->
-        <section>
-            <h2>Account Settings</h2>
+            <#list libraries as library>
+                <article>
+                    <h4>${library.name}</h4>
+                    <p>${library.address}</p>
+                </article>
+            </#list>
 
-            <article>
-                <h3>Manage Account</h3>
+        <#else>
+            <p>You do not currently have any libraries registered.</p>
+        </#if>
 
-                <p>
-                    Update your account information or permanently
-                    delete your account.
-                </p>
+    </section>
 
-                <p>
-                    <a href="/provider/edit-details">
-                        Edit Account
-                    </a>
-                </p>
+    <section>
+        <h3>Book Management</h3>
 
-                <form action="/provider/delete-account"
-                      method="post"
-                      onsubmit="return confirm('Are you sure you want to permanently delete your account?');">
+        <p>Manage the books in your collection.</p>
 
-                    <button type="submit">
-                        Delete Account
-                    </button>
+        <a href="/provider/books">
+            Manage Your Books
+        </a>
 
-                </form>
-            </article>
-        </section>
+    </section>
 
-    </main>
+    <section>
+        <h3>Account Management</h3>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-    </footer>
+        <form action="/provider/delete-account" method="post"
+              onsubmit="return confirm('Are you sure you want to delete your account?');">
 
-</div>
+            <button type="submit" class="btn">
+                Delete Account
+            </button>
+
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 LibraryPal</p>
+</footer>
 
 </body>
 </html>

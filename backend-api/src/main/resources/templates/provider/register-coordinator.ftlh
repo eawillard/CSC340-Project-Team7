@@ -4,71 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Coordinator | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
+    <title>Provider Registration - LibraryPal</title>
 </head>
-<body class="app-page">
-<div class="container">
 
-    <nav>
-        <div class="navbar">
-            <a href="/" class="navbar-brand">LibraryPal</a>
-            <ul class="nav-links">
-                <li><a href="/provider/profile">Profile</a></li>
-                <li><a href="/provider/edit-details">Edit Details</a></li>
-                <li><a href="/provider/register">Register Coordinator</a></li>
-            </ul>
+<body class="account-page">
+
+<header>
+    <h1>LibraryPal</h1>
+    <p>Register your provider account.</p>
+</header>
+
+<main>
+    <h2>Create Provider Account</h2>
+
+    <#if error??>
+        <p class="error-message">${error}</p>
+    </#if>
+
+    <form action="/provider/register" method="post">
+
+        <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="Enter your full name"
+                   required>
         </div>
-    </nav>
 
-    <main>
-        <h1>Register New Coordinator</h1>
-        <p>Create a new LibraryPal coordinator account.</p>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="you@example.com"
+                   required>
+        </div>
 
-        <#if error??>
-            <p class="error-message">${error}</p>
-        </#if>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Create a password"
+                   required>
+        </div>
 
-        <form action="/provider/register" method="post">
+        <button type="submit" class="btn btn-primary">
+            Register
+        </button>
 
-            <#if _csrf??>
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-            </#if>
+    </form>
 
-            <label for="name">Full Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Enter full name"
-                required>
+    <p>Already have an account?
+        <a href="/login">Sign in</a>
+    </p>
 
-            <label for="email">Email Address</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Enter email address"
-                required>
+</main>
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Create a password"
-                required>
+<footer>
+    <p>&copy; 2026 LibraryPal</p>
+</footer>
 
-            <button type="submit">Register Coordinator</button>
-
-            <a href="/provider/profile">Cancel</a>
-        </form>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-    </footer>
-
-</div>
 </body>
 </html>

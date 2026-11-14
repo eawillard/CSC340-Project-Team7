@@ -1,73 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Details | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
+    <title>Edit Provider Details - LibraryPal</title>
 </head>
-<body class="app-page">
-<div class="container">
+
+<body>
+
+<header>
+    <h1>LibraryPal</h1>
+    <p>Update your provider account.</p>
 
     <nav>
-        <div class="navbar">
-            <a href="/" class="navbar-brand">LibraryPal</a>
-            <ul class="nav-links">
-                <li><a href="/provider/profile">Profile</a></li>
-                <li><a href="/provider/edit-details">Edit Details</a></li>
-                <li><a href="/provider/register">Register Coordinator</a></li>
-            </ul>
-        </div>
+        <a href="/provider/profile">Profile</a>
+        <a href="/provider/books">Manage Books</a>
+        <a href="/logout">Logout</a>
     </nav>
+</header>
 
-    <main>
-        <h1>Edit Personal Information</h1>
-        <p>Update your LibraryPal account information.</p>
+<main>
 
-        <#if error??>
-            <p class="error-message">${error}</p>
-        </#if>
+    <h2>Edit Account Details</h2>
 
-        <form action="/provider/edit-details" method="post">
+    <#if error??>
+        <p class="error-message">${error}</p>
+    </#if>
 
-            <#if _csrf??>
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-            </#if>
+    <form action="/provider/edit-details" method="post">
 
-            <label for="name">Full Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value="${coordinator.name}"
-                required>
+        <div class="form-group">
+            <label for="name">Full Name:</label>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   value="${coordinator.name}"
+                   required>
+        </div>
 
-            <label for="email">Email Address</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="${coordinator.email}"
-                required>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email"
+                   id="email"
+                   name="email"
+                   value="${coordinator.email}"
+                   required>
+        </div>
 
-            <label for="password">New Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Leave blank to keep your current password">
+        <div class="form-group">
+            <label for="password">New Password:</label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Leave blank to keep current password">
+        </div>
 
-            <button type="submit">Save Changes</button>
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
 
-            <a href="/provider/profile">Cancel</a>
-        </form>
-    </main>
+    </form>
 
-    <footer>
-        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-    </footer>
+    <p>
+        <a href="/provider/profile">Cancel and return to profile</a>
+    </p>
 
-</div>
+</main>
+
+<footer>
+    <p>&copy; 2026 LibraryPal</p>
+</footer>
+
 </body>
 </html>
