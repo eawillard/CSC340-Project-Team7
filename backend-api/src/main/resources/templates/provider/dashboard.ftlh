@@ -4,54 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider Dashboard | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
-    <title>LibraryPal | Provider Dashboard</title>
 </head>
 
 <body class="app-page">
 
 <div class="container">
 
-    <nav>
-        <div class="navbar">
+    <#include "/provider/provider-nav.ftlh">
 
-            <a href="/" class="navbar-brand">LibraryPal</a>
+    <main>
 
-            <ul class="nav-links">
-                <li><a href="/provider/dashboard">Dashboard</a></li>
-                <li><a href="/provider/books">Manage Books</a></li>
-                <li><a href="/provider/customers">View Members</a></li>
-                <li><a href="/provider/profile">Profile</a></li>
-                <li><a href="/login" class="btn btn-outline">Logout</a></li>
-            </ul>
-
-        </div>
-    </nav>
-
-    <!-- Dashboard Header -->
-    <section class="section">
-
-        <div class="container">
+        <section class="section">
 
             <div class="dashboard-header">
 
                 <div class="dashboard-title">
-                    Welcome Back, ${provider.firstName}!
+                    Welcome Back, ${provider.name}
                 </div>
 
                 <div class="dashboard-subtitle">
-                    Manage your library and help customers connect
-                    with available books and services.
+                    Manage your library collection and help customers
+                    discover available books.
                 </div>
 
             </div>
 
-            <!-- Statistics -->
             <div class="dashboard-grid">
 
                 <div class="stat-card">
                     <div class="stat-number">
-                        ${totalBooks}
+                        ${totalBooks!0}
                     </div>
                     <div class="stat-label">
                         Books in Collection
@@ -60,16 +44,16 @@
 
                 <div class="stat-card">
                     <div class="stat-number">
-                        ${availableBooks}
+                        ${availableBooks!0}
                     </div>
                     <div class="stat-label">
-                        Available Books
+                        Available Copies
                     </div>
                 </div>
 
                 <div class="stat-card">
                     <div class="stat-number">
-                        ${pendingRequests}
+                        ${pendingRequests!0}
                     </div>
                     <div class="stat-label">
                         Pending Requests
@@ -78,7 +62,7 @@
 
                 <div class="stat-card">
                     <div class="stat-number">
-                        ${totalCustomers}
+                        ${totalCustomers!0}
                     </div>
                     <div class="stat-label">
                         Customers
@@ -87,147 +71,119 @@
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <section class="section">
 
-    <!-- Upcoming Pickups -->
-    <section class="section">
+            <h2>Quick Actions</h2>
 
-        <div class="container">
+            <div class="dashboard-grid">
 
-            <h2>Upcoming Pickups</h2>
+                <div class="card">
+                    <div class="card-content">
 
-            <#if pickups?? && pickups?has_content>
+                        <h3>Manage Books</h3>
 
-                <#list pickups as pickup>
+                        <p>
+                            View and update your existing book collection.
+                        </p>
 
-                    <div class="session-item">
-
-                        <div class="session-header">
-
-                            <div>
-                                <div class="session-title">
-                                    ${pickup.customerName} — ${pickup.bookTitle}
-                                </div>
-
-                                <span class="session-status status-upcoming">
-                                    ${pickup.status}
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div class="session-details">
-
-                            <div class="detail-item">
-                                <span class="detail-label">Pickup Date:</span>
-                                ${pickup.pickupDate}
-                            </div>
-
-                            <div class="detail-item">
-                                <span class="detail-label">Customer:</span>
-                                ${pickup.customerName}
-                            </div>
-
-                            <div class="detail-item">
-                                <span class="detail-label">Book:</span>
-                                ${pickup.bookTitle}
-                            </div>
-
-                        </div>
-
-                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-
-                            <a href="/provider/customers/${pickup.customerId}"
-                               class="btn btn-primary">
-                                View Customer
-                            </a>
-
-                            <#if pickup.status == "Confirmed">
-
-                                <form action="/provider/pickups/${pickup.id}/ready"
-                                      method="post">
-
-                                    <button type="submit" class="btn btn-outline">
-                                        Mark Ready
-                                    </button>
-
-                                </form>
-
-                            </#if>
-
-                            <#if pickup.status == "Pending">
-
-                                <form action="/provider/requests/${pickup.id}/approve"
-                                      method="post">
-
-                                    <button type="submit" class="btn btn-primary">
-                                        Approve Request
-                                    </button>
-
-                                </form>
-
-                            </#if>
-
-                        </div>
+                        <a href="/provider/books"
+                           class="btn btn-primary">
+                            Manage Books
+                        </a>
 
                     </div>
+                </div>
 
-                </#list>
+                <div class="card">
+                    <div class="card-content">
 
-            <#else>
+                        <h3>Add New Book</h3>
 
-                <p>No upcoming pickups.</p>
+                        <p>
+                            Add a new book to your collection.
+                        </p>
 
-            </#if>
+                        <a href="/provider/books/new"
+                           class="btn btn-primary">
+                            Add Book
+                        </a>
 
-        </div>
+                    </div>
+                </div>
 
-    </section>
+                <div class="card">
+                    <div class="card-content">
 
-    <!-- Recent Reviews -->
-    <section class="section">
+                        <h3>My Profile</h3>
 
-        <div class="container">
+                        <p>
+                            View and update your provider information.
+                        </p>
 
-            <h2>Recent Customer Reviews</h2>
+                        <a href="/provider/profile"
+                           class="btn btn-primary">
+                            View Profile
+                        </a>
 
-            <#if reviews?? && reviews?has_content>
+                    </div>
+                </div>
 
-                <#list reviews as review>
+            </div>
 
-                    <div class="card" style="margin-bottom: 1rem;">
+        </section>
+
+        <section class="section">
+
+            <h2>Your Book Collection</h2>
+
+            <#if books?? && books?has_content>
+
+                <#list books as book>
+
+                    <article class="card">
 
                         <div class="card-content">
 
+                            <h3>${book.title}</h3>
+
                             <p>
-                                <strong>${review.customerName}</strong>
+                                Author: ${book.author}
                             </p>
 
                             <p>
-                                ${review.rating}/5
+                                Available Copies:
+                                ${book.availableCopies}
                             </p>
 
-                            <p>
-                                "${review.comment}"
-                            </p>
+                            <a href="/provider/books/${book.id}/edit"
+                               class="btn btn-outline">
+                                Edit Book
+                            </a>
 
                         </div>
 
-                    </div>
+                    </article>
 
                 </#list>
 
             <#else>
 
-                <p>No customer reviews yet.</p>
+                <p>
+                    You haven't added any books yet.
+                </p>
+
+                <a href="/provider/books/new"
+                   class="btn btn-primary">
+                    Add Your First Book
+                </a>
 
             </#if>
 
-        </div>
+        </section>
 
-    </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 LibraryPal. All rights reserved.</p>

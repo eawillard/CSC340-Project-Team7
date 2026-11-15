@@ -9,6 +9,7 @@
 </head>
 
 <body class="app-page">
+
 <div class="container">
 
     <#include "/provider/provider-nav.ftlh">
@@ -17,7 +18,7 @@
 
         <section class="section">
             <h1>Manage Your Books</h1>
-            <p>Add, edit, and manage books across your libraries.</p>
+            <p>View, add, edit and manage your collection.</p>
 
             <a href="/provider/books/new" class="btn btn-primary">
                 + Add New Book
@@ -33,6 +34,7 @@
         </#if>
 
         <section class="section">
+
             <h2>Collection Statistics</h2>
 
             <div class="dashboard-grid">
@@ -40,6 +42,11 @@
                 <div class="stat-card">
                     <div class="stat-number">${totalBooks!0}</div>
                     <div class="stat-label">Book Records</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">${totalCopies!0}</div>
+                    <div class="stat-label">Total Copies</div>
                 </div>
 
                 <div class="stat-card">
@@ -53,9 +60,11 @@
                 </div>
 
             </div>
+
         </section>
 
         <section class="section">
+
             <h2>Your Library Collection</h2>
 
             <#if books?? && books?has_content>
@@ -63,6 +72,7 @@
                 <#list books as book>
 
                     <article class="card" style="margin-bottom: 1.5rem;">
+
                         <div class="card-content">
 
                             <h3>${book.title}</h3>
@@ -79,7 +89,7 @@
 
                             <p>
                                 <strong>Genre:</strong>
-                                ${book.genre!'Not provided'}
+                                ${book.genre}
                             </p>
 
                             <p>
@@ -94,7 +104,13 @@
 
                             <p>
                                 <strong>Library:</strong>
-                                ${book.localLibrary.name!'Not provided'}
+
+                                <#if book.localLibrary??>
+                                    ${book.localLibrary.name}
+                                <#else>
+                                    Not assigned to a library
+                                </#if>
+
                             </p>
 
                             <p>
@@ -111,10 +127,15 @@
                                 <strong>Status:</strong>
 
                                 <#if book.availableCopies gt 0>
-                                    <span class="success-message">Available</span>
+                                    <span class="success-message">
+                                        Available
+                                    </span>
                                 <#else>
-                                    <span class="error-message">Checked Out</span>
+                                    <span class="error-message">
+                                        Checked Out
+                                    </span>
                                 </#if>
+
                             </p>
 
                             <p>
@@ -138,20 +159,17 @@
                                       action="/provider/books/${book.id}/delete"
                                       onsubmit="return confirm('Are you sure you want to delete this book?');">
 
-                                    <#if _csrf??>
-                                        <input type="hidden"
-                                               name="${_csrf.parameterName}"
-                                               value="${_csrf.token}">
-                                    </#if>
-
-                                    <button type="submit" class="btn btn-outline">
+                                    <button type="submit"
+                                            class="btn btn-outline">
                                         Delete Book
                                     </button>
+
                                 </form>
 
                             </div>
 
                         </div>
+
                     </article>
 
                 </#list>
@@ -160,17 +178,23 @@
 
                 <div class="card">
                     <div class="card-content">
+
                         <h3>No Books Yet</h3>
-                        <p>You haven't added any books to your collection.</p>
+
+                        <p>
+                            You haven't added any books to your collection.
+                        </p>
 
                         <a href="/provider/books/new"
                            class="btn btn-primary">
                             Add Your First Book
                         </a>
+
                     </div>
                 </div>
 
             </#if>
+
         </section>
 
     </main>
@@ -180,5 +204,6 @@
     </footer>
 
 </div>
+
 </body>
 </html>

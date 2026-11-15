@@ -1,76 +1,98 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Provider Details | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
-    <title>Edit Provider Details - LibraryPal</title>
 </head>
 
-<body>
+<body class="app-page">
 
-<header>
-    <h1>LibraryPal</h1>
-    <p>Update your provider account.</p>
+<div class="container">
 
-    <nav>
-        <a href="/provider/profile">Profile</a>
-        <a href="/provider/books">Manage Books</a>
-        <a href="/logout">Logout</a>
-    </nav>
-</header>
+    <#include "/provider/provider-nav.ftlh">
 
-<main>
+    <main>
 
-    <h2>Edit Account Details</h2>
+        <section class="section">
 
-    <#if error??>
-        <p class="error-message">${error}</p>
-    </#if>
+            <h1>Edit Account Details</h1>
 
-    <form action="/provider/edit-details" method="post">
+            <p>Update your provider account information.</p>
 
-        <div class="form-group">
-            <label for="name">Full Name:</label>
-            <input type="text"
-                   id="name"
-                   name="name"
-                   value="${coordinator.name}"
-                   required>
-        </div>
+            <#if error??>
+                <p class="error-message">${error}</p>
+            </#if>
 
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email"
-                   id="email"
-                   name="email"
-                   value="${coordinator.email}"
-                   required>
-        </div>
+            <div class="card">
+                <div class="card-content">
 
-        <div class="form-group">
-            <label for="password">New Password:</label>
-            <input type="password"
-                   id="password"
-                   name="password"
-                   placeholder="Leave blank to keep current password">
-        </div>
+                    <form action="/provider/edit-details" method="post">
 
-        <button type="submit" class="btn btn-primary">
-            Save Changes
-        </button>
+                        <div class="form-group">
 
-    </form>
+                            <label for="name">Full Name</label>
 
-    <p>
-        <a href="/provider/profile">Cancel and return to profile</a>
-    </p>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="${coordinator.name}"
+                                required>
 
-</main>
+                        </div>
 
-<footer>
-    <p>&copy; 2026 LibraryPal</p>
-</footer>
+                        <div class="form-group">
+
+                            <label for="email">Email Address</label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value="${coordinator.email}"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="password">New Password</label>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Leave blank to keep current password">
+
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Changes
+                        </button>
+
+                        <a href="/provider/profile"
+                           class="btn btn-outline">
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+    </footer>
+
+</div>
 
 </body>
 </html>

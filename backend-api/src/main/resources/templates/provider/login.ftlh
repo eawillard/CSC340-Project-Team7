@@ -1,21 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/styles.css">
-    <title>Login - LibraryPal</title>
+
+    <title>Provider Login | LibraryPal</title>
 </head>
 
 <body class="account-page">
 
 <header>
     <h1>LibraryPal</h1>
-    <p>Connect with your local library.</p>
+    <p>Manage your local library with LibraryPal.</p>
 </header>
 
 <main>
-    <h2>Login</h2>
+
+    <h2>Provider Login</h2>
 
     <#if errorMessage??>
         <p class="error-message">${errorMessage}</p>
@@ -28,26 +32,20 @@
     <form action="/login" method="post">
 
         <div class="form-group">
-            <label for="accountType">Account Type:</label>
-            <select id="accountType" name="accountType" required>
-                <option value="CUSTOMER">Customer</option>
-                <option value="PROVIDER">Provider</option>
-            </select>
-        </div>
+            <label for="identifier">Email:</label>
 
-        <div class="form-group">
-            <label for="identifier">Email or Username:</label>
             <input
-                type="text"
+                type="email"
                 id="identifier"
                 name="identifier"
-                placeholder="Enter your email or username"
                 value="${identifier!''}"
+                placeholder="Enter your email"
                 required>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
+
             <input
                 type="password"
                 id="password"
@@ -62,14 +60,12 @@
 
     </form>
 
-    <p>Don't have an account?</p>
-    <p>
-        Customer:
-        <a href="/customer/register">Create a customer account</a>
+    <p>Don't have a provider account?
+        <a href="/provider/register">Register here</a>
     </p>
-    <p>
-        Provider:
-        <a href="/provider/register">Create a provider account</a>
+
+    <p>Are you a customer?
+        <a href="/customer/login">Customer Login</a>
     </p>
 
 </main>

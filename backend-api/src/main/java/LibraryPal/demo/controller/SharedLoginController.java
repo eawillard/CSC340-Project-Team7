@@ -1,9 +1,8 @@
+
 package LibraryPal.demo.controller;
 
 import LibraryPal.demo.entity.Coordinator;
-import LibraryPal.demo.entity.Customer;
 import LibraryPal.demo.service.CoordinatorService;
-import LibraryPal.demo.service.CustomerService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -19,83 +18,80 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class SharedLoginController {
 
-    private final CustomerService customerService;
     private final CoordinatorService coordinatorService;
     private final PasswordEncoder passwordEncoder;
 
     public SharedLoginController(
-            CustomerService customerService,
             CoordinatorService coordinatorService,
             PasswordEncoder passwordEncoder) {
 
-        this.customerService = customerService;
         this.coordinatorService = coordinatorService;
         this.passwordEncoder = passwordEncoder;
     }
 
+    // Display provider login page
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "provider/login";
     }
 
+    // Process provider login
     @PostMapping("/login")
     public String login(
-            @RequestParam String accountType,
             @RequestParam String identifier,
             @RequestParam String password,
             HttpServletRequest request,
             Model model) {
 
         try {
-            if ("CUSTOMER".equalsIgnoreCase(accountType)) {
 
-                Customer customer = customerService.authenticate(
-                        identifier.trim(), password);
+            String email = identifier.trim().toLowerCase();
 
-                HttpSession session = request.getSession(true);
-                request.changeSessionId();
+            Coordinator coordinator = coordinatorService
+                    .getCoordinatorByEmail(email)
+                    .orElseThrow(() ->
+                            new IllegalArgumentException(
+                                    "Invalid email or password."
+                            ));
 
-                session.setAttribute("customerId", customer.getId());
+            if (coordinator.getPassword() == null ||
+                    !passwordEncoder.matches(
+                            password,
+                            coordinator.getPassword())) {
 
-                return "redirect:/customer/books";
+                throw new IllegalArgumentException(
+                        "Invalid email or password."
+                );
             }
 
-            if ("PROVIDER".equalsIgnoreCase(accountType)) {
+            // Create a fresh session identifier
+            request.getSession(true);
+            request.changeSessionId();
 
-                Coordinator coordinator = coordinatorService
-                        .getCoordinatorByEmail(identifier.trim())
-                        .orElseThrow(() ->
-                                new IllegalArgumentException(
-                                        "Invalid email or password."));
+            // Store logged-in provider ID
+            HttpSession session = request.getSession();
 
-                if (!passwordEncoder.matches(
-                        password, coordinator.getPassword())) {
+            session.setAttribute(
+                    "coordinatorId",
+                    coordinator.getId()
+            );
 
-                    throw new IllegalArgumentException(
-                            "Invalid email or password.");
-                }
-
-                HttpSession session = request.getSession(true);
-                request.changeSessionId();
-
-                session.setAttribute(
-                        "coordinatorId", coordinator.getId());
-
-                return "redirect:/provider/profile";
-            }
-
-            throw new IllegalArgumentException(
-                    "Please select a valid account type.");
+            return "redirect:/provider/dashboard";
 
         } catch (IllegalArgumentException ex) {
 
-            model.addAttribute("errorMessage", ex.getMessage());
+            model.addAttribute(
+                    "errorMessage",
+                    ex.getMessage()
+            );
+
             model.addAttribute("identifier", identifier);
 
-            return "login";
+            return "provider/login";
         }
     }
 
+    // Provider logout
     @GetMapping("/logout")
     public String logout(
             HttpSession session,
@@ -105,7 +101,8 @@ public class SharedLoginController {
 
         redirect.addFlashAttribute(
                 "successMessage",
-                "You have successfully logged out.");
+                "You have successfully logged out."
+        );
 
         return "redirect:/login";
     }
