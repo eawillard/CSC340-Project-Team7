@@ -4,53 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Coordinator | LibraryPal</title>
+    <title>Provider Registration | LibraryPal</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="app-page">
-<div class="container">
 
-    <nav>
-        <div class="navbar">
-            <a href="/" class="navbar-brand">LibraryPal</a>
-            <ul class="nav-links">
-                <li><a href="/provider/profile">Profile</a></li>
-                <li><a href="/provider/edit-details">Edit Details</a></li>
-                <li><a href="/provider/register">Register Coordinator</a></li>
-            </ul>
-        </div>
-    </nav>
+<body class="account-page">
 
-    <main>
-        <h1>Register New Coordinator</h1>
-        <p>Create a new LibraryPal coordinator account.</p>
+<header>
+    <h1>LibraryPal</h1>
+    <p>Create your provider account.</p>
+</header>
 
-        <#if error??>
-            <p class="error-message">${error}</p>
-        </#if>
+<main>
 
-        <form action="/provider/register" method="post">
+    <h2>Register as a Provider</h2>
 
-            <#if _csrf??>
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-            </#if>
+    <#if error??>
+    <p class="error-message">${error}</p>
+</#if>
 
+    <form action="/provider/register" method="post">
+
+        <div class="form-group">
             <label for="name">Full Name</label>
             <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Enter full name"
+                placeholder="Enter your full name"
                 required>
+        </div>
 
+        <div class="form-group">
             <label for="email">Email Address</label>
             <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter email address"
+                placeholder="you@example.com"
                 required>
+        </div>
 
+        <div class="form-group">
             <label for="password">Password</label>
             <input
                 type="password"
@@ -58,17 +53,28 @@
                 name="password"
                 placeholder="Create a password"
                 required>
+        </div>
 
-            <button type="submit">Register Coordinator</button>
+        <button type="submit" class="btn btn-primary">
+            Create Provider Account
+        </button>
 
-            <a href="/provider/profile">Cancel</a>
-        </form>
-    </main>
+    </form>
 
-    <footer>
-        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-    </footer>
+    <p>
+        Already have an account?
+        <a href="/login">Sign in</a>
+    </p>
 
-</div>
+    <p>
+        <a href="/">Return to Home</a>
+    </p>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+</footer>
+
 </body>
 </html>

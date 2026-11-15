@@ -7,5 +7,11 @@ import java.util.List;
 
 public interface LocalLibraryRepository
         extends JpaRepository<LocalLibrary, Long> {
+
+    // Find libraries connected to a particular coordinator
     List<LocalLibrary> findByCoordinatorId(Long coordinatorId);
+
+    // Find libraries that have not yet been assigned
+    List<LocalLibrary> findByCoordinatorIsNull();
+
 }

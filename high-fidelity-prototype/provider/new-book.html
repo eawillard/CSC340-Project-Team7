@@ -1,70 +1,159 @@
-<!doctype html>
+HTML
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
-  <title>Add a New Book | LibraryPal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book | LibraryPal</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body class="app-page">
-  <div class="container">
+<div class="container">
 
-    <!-- Navigation -->
-    <nav>
-      <div class="navbar">
-        <a class="navbar-brand" href="../index.html">LibraryPal</a>
-        <ul class="nav-links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="manage-books.html">Manage Books</a></li>
-         <li><a href="view-customers.html">View Members</a></li>
-         <li><a href="profile.html">Profile</a></li>
-         <li><a href="../login.html" class="btn btn-outline">Logout</a></li>
-        </ul>
-      </div>
-    </nav>
+    <#include "/provider/provider-nav.ftlh">
 
-    <!-- Add Book Section -->
-    <section class="section">
+    <main>
+        <section class="section">
+            <h1>Add a New Book</h1>
+            <p>Add a book to your connected library.</p>
+        </section>
 
-      <div class="container" style="max-width: 600px;">
-        <div class="card">
- 
-            <div class="card-content">
-          
-                <h2 class="text-center mb-2">Add a New Book</h2>
+        <#if errorMessage??>
+            <p class="error-message">${errorMessage}</p>
+        </#if>
 
-            <p class="text-center text-muted mb-4">Add a book to your library collection</p>
-            
-            <form id="newBookForm">
-            
-                <h3>Book Information</h3>
-              <div class="form-group"><label for="bookTitle">Book Title</label><input id="bookTitle" type="text" placeholder="The Great Gatsby" required></div>
+        <#if successMessage??>
+            <p class="success-message">${successMessage}</p>
+        </#if>
 
-              <div class="form-group"><label for="author">Author</label><input id="author" type="text" placeholder="F. Scott Fitzgerald" required></div>
+        <#if libraries?? && libraries?has_content>
 
-              <div class="form-group"><label for="isbn">ISBN</label><input id="isbn" type="text" placeholder="9780743273565" required></div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-content">
 
-              <div class="form-group"><label for="category">Category</label><select id="category" required><option value="">Select a category</option><option value="fiction">Fiction</option><option value="nonfiction">Non-Fiction</option><option value="mystery">Mystery</option><option value="fantasy">Fantasy</option><option value="science-fiction">Science Fiction</option><option value="biography">Biography</option><option value="history">History</option><option value="romance">Romance</option><option value="other">Other</option></select></div>
-             
-              <div class="form-group"><label for="publicationYear">Publication Year</label><input id="publicationYear" type="number" placeholder="1925" min="0" required></div>
-             
-             
-              <div class="form-group"><label for="copies">Number of Copies</label><input id="copies" type="number" placeholder="1" min="1" required></div>
-             
-              <div class="form-group"><label for="description">Description</label><textarea id="description" placeholder="Enter a short description of the book..." required></textarea></div>
-             
-              <button class="btn btn-primary" type="button" style="width: 100%;" onclick="window.location.href='manage-books.html'">Add Book</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+                        <form method="post" action="/provider/books/new">
 
-    <!-- Footer -->
+                            <#if _csrf??>
+                                <input type="hidden"
+                                       name="${_csrf.parameterName}"
+                                       value="${_csrf.token}">
+                            </#if>
+
+                            <div class="form-group">
+                                <label for="libraryId">Your Library</label>
+                                <select id="libraryId" name="libraryId" required>
+                                    <#list libraries as library>
+                                        <option value="${library.id}"
+                                            <#if selectedLibraryId?? &&
+                                                selectedLibraryId == library.id>
+                                                selected
+                                            </#if>>
+                                            ${library.name}
+                                        </option>
+                                    </#list>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Book Title *</label>
+                                <input type="text" id="title" name="title"
+                                       value="${formTitle!''}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="author">Author *</label>
+                                <input type="text" id="author" name="author"
+                                       value="${formAuthor!''}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="isbn">ISBN *</label>
+                                <input type="text" id="isbn" name="isbn"
+                                       value="${formIsbn!''}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="genre">Category / Genre *</label>
+                                <input type="text" id="genre" name="genre"
+                                       value="${formGenre!''}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="publisher">Publisher</label>
+                                <input type="text" id="publisher" name="publisher"
+                                       value="${formPublisher!''}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="publicationYear">Publication Year</label>
+                                <input type="number" id="publicationYear"
+                                       name="publicationYear" min="1"
+                                       value="${formPublicationYear!''}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="totalCopies">Number of Copies *</label>
+                                <input type="number" id="totalCopies"
+                                       name="totalCopies" min="1"
+                                       value="${formTotalCopies!'1'}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description *</label>
+                                <textarea id="description" name="description"
+                                          rows="5" maxlength="2000"
+                                          required>${formDescription!''}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Book Location *</label>
+                                <input type="text" id="location" name="location"
+                                       value="${formLocation!''}"
+                                       placeholder="Fiction - Shelf A" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Save Book
+                            </button>
+
+                            <a href="/provider/books" class="btn btn-outline">
+                                Cancel
+                            </a>
+
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        <#else>
+
+            <section class="section">
+                <div class="card">
+                    <div class="card-content">
+                        <h2>Connect to a Library First</h2>
+
+                        <p>
+                            You must connect your coordinator account
+                            to a library before adding books.
+                        </p>
+
+                        <a href="/provider/profile"
+                           class="btn btn-primary">
+                            Connect to a Library
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </#if>
+    </main>
+
     <footer>
-
-      <p>&copy; 2026 LibraryPal. All rights reserved.</p>
+        <p>&copy; 2026 LibraryPal. All rights reserved.</p>
     </footer>
-  </div>
+
+</div>
 </body>
 </html>

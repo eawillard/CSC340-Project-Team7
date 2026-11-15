@@ -27,7 +27,7 @@ import java.time.LocalDate;
 public class CustomerPageController {
 
     private static final String SESSION_KEY = "customerId";
-    private static final String LOGIN = "redirect:/customer/login";
+    private static final String LOGIN = "redirect:/login";
 
     private final CustomerService customerService;
     private final BookBrowseService bookBrowseService;

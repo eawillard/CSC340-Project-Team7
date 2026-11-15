@@ -1,101 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
-    <title>Profile | LibraryPal</title>
-</head>
 
-<body class="app-page">
-    <div class="container">
+<section>
+    <h2>Library Information</h2>
 
-        <!-- Navigation -->
-        <nav>
-            <div class="navbar">
-                <a href="../index.html" class="navbar-brand">LibraryPal</a>
+    <#if errorMessage??>
+        <p class="error-message">${errorMessage}</p>
+    </#if>
 
-                <ul class="nav-links">
-                    <li><a href="dashboard.html">Dashboard</a></li>
-                    <li><a href="manage-books.html">My Books</a></li>
-                    <li><a href="view-customers.html">View Members</a></li>
-                    <li><a href="profile.html">Profile</a></li>
-                    <li><a href="../login.html">Logout</a></li>
-                </ul>
-            </div>
-        </nav>
+    <#if successMessage??>
+        <p class="success-message">${successMessage}</p>
+    </#if>
 
-        <main>
+    <#if connectedLibrary??>
 
-            <section>
-                <h1>My Profile</h1>
-                <p>Manage your LibraryPal account information.</p>
-            </section>
+        <article>
+            <h3>Connected Library</h3>
 
-            <section>
-                <h2>Personal Information</h2>
+            <p>
+                <strong>Library:</strong>
+                ${connectedLibrary.name}
+            </p>
 
-                <article>
-                    <h3>Personal Details</h3>
+            <p>
+                <strong>Address:</strong>
+                ${connectedLibrary.address}
+            </p>
 
-                    <p><strong>First Name:</strong> John</p>
-                    <p><strong>Last Name:</strong> Doe</p>
-                    <p><strong>Email:</strong> john.doe@example.com</p>
-                    <p><strong>Phone:</strong> (555) 123-4567</p>
+            <p>
+                Your coordinator account is connected to this library.
+            </p>
 
-                    <a href="edit-details.html">Edit Personal Information</a>
-                </article>
-            </section>
+            <a href="/provider/books" class="btn btn-primary">
+                Manage Library Books
+            </a>
+        </article>
 
-            <section>
-                <h2>Library Information</h2>
+    <#else>
 
-                <article>
-                    <h3>Library Details</h3>
+        <article>
+            <h3>Connect to a Library</h3>
 
-                    <p><strong>Role:</strong> Library Coordinator</p>
-                    <p><strong>Library:</strong> Greensboro Central Library</p>
-                    <p><strong>Years of Experience:</strong> 4 years</p>
+            <p>
+                You have not connected your coordinator account
+                to a library yet.
+            </p>
 
-                    <p><strong>Professional Bio:</strong></p>
+            <#if availableLibraries?? && availableLibraries?has_content>
 
-                    <p>
-                        I am passionate about helping people find books and
-                        providing a welcoming environment for library members.</p>
+                <form action="/provider/connect-library" method="post">
 
-                    <a href="edit-details.html">Edit Library Information</a>
-                </article>
-            </section>
+                    <#if _csrf??>
+                        <input type="hidden"
+                               name="${_csrf.parameterName}"
+                               value="${_csrf.token}">
+                    </#if>
 
-            <section>
-                <h2>Library Statistics</h2>
+                    <div class="form-group">
+                        <label for="libraryId">
+                            Select Your Library
+                        </label>
 
-                <article>
-                    <h3>Current Statistics</h3>
-                    <p><strong>Total Books Managed:</strong> 245</p>
-                    <p><strong>Total Members:</strong> 128</p>
-                    <p><strong>Books Checked Out:</strong> 32</p>
-                    <p><strong>Books Returned:</strong> 156</p>
-                </article>
-            </section>
+                        <select id="libraryId"
+                                name="libraryId"
+                                required>
 
-            <section>
-                <h2>Account Settings</h2>
-                <article>
-                    <h3>Manage Account</h3>
-                    <button type="button">Change Password</button>
-                    <button type="button">Notification Settings</button>
-                    <button type="button">Account Settings</button>
-                    <button type="button">Delete Account</button>
-                </article>
-            </section>
-        </main>
+                            <#list availableLibraries as library>
+                                <option value="${library.id}">
+                                    ${library.name} - ${library.address}
+                                </option>
+                            </#list>
 
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 LibraryPal. All rights reserved.</p>
-        </footer>
+                        </select>
+                    </div>
 
-    </div>
-</body>
-</html>
+                    <button type="submit" class="btn btn-primary">
+                        Connect to Library
+                    </button>
+
+                </form>
+
+            <#else>
+
+                <p>
+                    There are currently no available libraries.
+                    Please contact an administrator.
+                </p>
+
+            </#if>
+        </article>
+
+    </#if>
+</section>
