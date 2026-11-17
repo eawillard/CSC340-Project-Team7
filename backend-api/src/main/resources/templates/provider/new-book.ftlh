@@ -114,13 +114,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="location">Book Location *</label>
+                            <label for="location">Library Location *</label>
                             <input
                                 type="text"
                                 id="location"
                                 name="location"
                                 value="${formLocation!''}"
-                                placeholder="Fiction - Shelf A"
+                                placeholder="Central Library"
                                 required>
                         </div>
 

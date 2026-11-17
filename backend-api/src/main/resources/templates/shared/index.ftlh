@@ -53,55 +53,33 @@
                 and connect with it to request a pickup.
             </p>
 
-            <div class="library-cards">
+          <div class="library-cards">
 
-                <#if libraries?? && libraries?has_content>
+    <#if libraries?? && libraries?has_content>
 
-                    <#list libraries as library>
+        <#list libraries as library>
 
-                        <article class="library-card">
+            <article class="library-card">
 
-                            <#if library.image??>
-                                <img src="/${library.image}"
-                                     alt="${library.name}">
-                            </#if>
+                <h3>${library.name}</h3>
 
-                            <h3>${library.name}</h3>
+                <p>${library.address}</p>
 
-                            <p>
-                                ${library.address}
-                            </p>
+                <a href="/customer/books">
+                    Browse books and connect
+                </a>
 
-                            <p>
-                                <strong>Services:</strong>
-                                ${library.services}
-                            </p>
+            </article>
 
-                            <p>
-                                <strong>Available books:</strong>
-                                ${library.availableBooks}
-                            </p>
+        </#list>
 
-                            <p>
-                                <strong>Featured genres:</strong>
-                                ${library.featuredGenres}
-                            </p>
+    <#else>
 
-                            <a href="/libraries/${library.id}">
-                                Browse books and connect
-                            </a>
+        <p>No libraries are currently available.</p>
 
-                        </article>
+    </#if>
 
-                    </#list>
-
-                <#else>
-
-                    <p>No libraries are currently available.</p>
-
-                </#if>
-
-            </div>
+</div>
         </div>
     </section>
 

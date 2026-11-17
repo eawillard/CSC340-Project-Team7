@@ -27,7 +27,7 @@ public class BookController {
     public ResponseEntity<Book> create(
             @Valid @RequestBody BookRequest request) {
 
-        Book book = bookService.create(request);
+        Book book = bookService.create(request, coordinatorId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(book);
     }

@@ -3,98 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <title>LibraryPal</title>
 </head>
 
-<main>
+<body>
+
     <!-- Navigation -->
     <nav>
         <div class="container">
-           
-        <ul>
-            <li><a href="index.html">Home</a></li>
-    
-            <li><a href="#how-it-works">How It Works</a></li>
-
-            <!-- This connects to login + customer login -->
-            <li><a href="login.html">Login</a></li>
-
-            <!-- This connects to registration -->
-            <li><a href="register.html">Register</a></li>
-        </ul>
-      </div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/customer/register">Register</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="container">
+    <main>
 
-        <h1>Welcome to LibraryPal</h1>
-        <p>Connect with your local library and discover, request, and manage your favorite books and resources more efficiently than ever before.</p>
-         
-        <!-- Customer registration -->
-        <a href="customer/dashboard.html">
-             Sign In as a Customer </a>
-        
-
-
-        <!-- Provider registration -->
-        <a href="provider/coordinator-register.html">
-            Sign In as a Provider </a>
-      </div>
-    </section>
-
-    <!-- Local Libraries Section -->
-    <section id="local-libraries">
-        <div class="container">
-            <h2>Local Libraries</h2>
-            <p>Discover a library, browse its available books, and connect with it to request a pickup.</p>
-
-            <div class="library-cards">
-                <article class="library-card" id="greensboro-central-library">
-                    <img src="images/Central-Library.png"
-                       alt="Greensboro Central Library">
-
-                    <h3>Greensboro Central Library</h3>
-                    <p>219 North Church Street<br>Greensboro, NC</p>
-                    <p><strong>Services:</strong> Book pickup, drop-off, community programs</p>
-                    <p><strong>Available books:</strong> 1,240</p>
-                    <p><strong>Featured genres:</strong> Fiction, biographies, and children's books</p>
-                    <a href="customer/library-details.html?library=greensboro-central">Browse books and connect</a>
-                </article>
-
-                <article class="library-card" id="glenwood-branch-library">
-                     <img src="images/Glenwood-lib.png"
-                           alt="Glenwood Community Library">
-                    <h3>Glenwood Branch Library</h3>
-                    <p>1901 W. Florida St.<br>Greensboro, NC</p>
-                    <p><strong>Services:</strong> Book pickup, book requests, reading programs</p>
-                    <p><strong>Available books:</strong> 875</p>
-                    <p><strong>Featured genres:</strong> Mystery, romance, and young adult books</p>
-                    <a href="customer/library-details.html?library=glenwood-branch">Browse books and connect</a>
-                </article>
-
-                <article class="library-card" id="benjamin-public-library">
-                      <img src="images/Benjamin-Library.png"
-                       alt="Benjamin Branch Library">
-                    <h3>Benjamin Public Library</h3>
-                    <p>1530 Benjamin Parkway<br>Greensboro, NC</p>
-                    <p><strong>Services:</strong> Book pickup, drop-off, community events</p>
-                    <p><strong>Available books:</strong> 963</p>
-                    <p><strong>Featured genres:</strong> Nonfiction, history, and educational books</p>
-                    <a href="customer/library-details.html?library=benjamin-public">Browse books and connect</a>
-                </article>
-            </div>
-        </div>
-    </section>
-     
-    <!-- How It Works -->
-     <section
-    id="how-it-works">
+        <!-- Hero Section -->
+        <section id="hero">
             <div class="container">
+
+                <h1>Welcome to LibraryPal</h1>
+
+                <p>
+                    Connect with your local library and discover,
+                    request, and manage your favorite books and
+                    resources more efficiently than ever before.
+                </p>
+
+                <a href="/customer/register">
+                    Sign In as a Customer
+                </a>
+
+                <a href="/provider/register">
+                    Sign In as a Provider
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Local Libraries Section -->
+        <section id="local-libraries">
+            <div class="container">
+
+                <h2>Local Libraries</h2>
+
+                <p>
+                    Discover a library, browse its available books,
+                    and connect with it to request a pickup.
+                </p>
+
+                <div class="library-cards">
+
+                    <article class="library-card" id="greensboro-central-library">
+
+                        <img src="/images/Central-Library.png"
+                             alt="Greensboro Central Library">
+
+                        <h3>Greensboro Central Library</h3>
+
+                        <p>219 North Church Street<br>Greensboro, NC</p>
+
+                        <p><strong>Services:</strong> Book pickup, drop-off, community programs</p>
+
+                        <p><strong>Available books:</strong> 1,240</p>
+
+                        <p><strong>Featured genres:</strong> Fiction, biographies, and children's books</p>
+
+                        <a href="/customer/libraries">
+                            Browse books and connect
+                        </a>
+
+                    </article>
+
+                    <article class="library-card" id="glenwood-branch-library">
+
+                        <img src="/images/Glenwood-lib.png"
+                             alt="Glenwood Community Library">
+
+                        <h3>Glenwood Branch Library</h3>
+
+                        <p>1901 W. Florida St.<br>Greensboro, NC</p>
+
+                        <p><strong>Services:</strong> Book pickup, book requests, reading programs</p>
+
+                        <p><strong>Available books:</strong> 875</p>
+
+                        <p><strong>Featured genres:</strong> Mystery, romance, and sci-fi books</p>
+
+                        <a href="/customer/libraries">
+                            Browse books and connect
+                        </a>
+
+                    </article>
+
+                    <article class="library-card" id="benjamin-public-library">
+
+                        <img src="/images/Benjamin-Library.png"
+                             alt="Benjamin Branch Library">
+
+                        <h3>Benjamin Public Library</h3>
+
+                        <p>1530 Benjamin Parkway<br>Greensboro, NC</p>
+
+                        <p><strong>Services:</strong> Book pickup, drop-off, community events</p>
+
+                        <p><strong>Available books:</strong> 963</p>
+
+                        <p><strong>Featured genres:</strong> Nonfiction, history, and educational books</p>
+
+                        <a href="/customer/libraries">
+                            Browse books and connect
+                        </a>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works">
+            <div class="container">
+
                 <h2>How It Works</h2>
-                
+
                 <article>
                     <h3>1. Create Your Profile</h3>
                     <p>Create a LibraryPal profile and connect with your local library.</p>
@@ -119,15 +156,21 @@
                     <h3>5. Read and Review</h3>
                     <p>Pick up your book, enjoy your reading, and share your experience with other readers.</p>
                 </article>
+
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 LibraryPal. All rights reserved. Making strong connections between readers and community libraries.</p>
+            <p>
+                &copy; 2026 LibraryPal. All rights reserved.
+                Making strong connections between readers and community libraries.
+            </p>
         </div>
     </footer>
+
 </body>
 </html>

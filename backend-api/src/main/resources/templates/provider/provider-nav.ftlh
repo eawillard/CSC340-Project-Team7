@@ -11,7 +11,9 @@
             <li>
                 <a href="/provider/dashboard">Dashboard</a>
             </li>
-
+            <li>
+                <a href="/provider/libraries">My Libraries</a>
+            </li>
             <li>
                 <a href="/provider/books">Manage Books</a>
             </li>
@@ -19,7 +21,7 @@
             <li>
                 <a href="/provider/books/new">Add Book</a>
             </li>
-
+            
             <li>
                 <a href="/provider/profile">Profile</a>
             </li>
