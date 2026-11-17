@@ -56,15 +56,9 @@ public class Book {
     @Column(nullable = false)
     private String location;
 
-    // A book belongs directly to a coordinator.
-    @ManyToOne
-    @JoinColumn(name = "coordinator_id")
-    @JsonIgnore
-    private Coordinator coordinator;
-
-    // A library can be assigned later.
-    @ManyToOne
-    @JoinColumn(name = "local_library_id", nullable = true)
+    // Every book must belong to a specific library.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "local_library_id", nullable = false)
     @JsonIgnore
     private LocalLibrary localLibrary;
 
@@ -153,14 +147,6 @@ public class Book {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public Coordinator getCoordinator() {
-        return coordinator;
-    }
-
-    public void setCoordinator(Coordinator coordinator) {
-        this.coordinator = coordinator;
     }
 
     public LocalLibrary getLocalLibrary() {

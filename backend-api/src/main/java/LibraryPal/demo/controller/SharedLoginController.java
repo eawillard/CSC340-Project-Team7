@@ -1,8 +1,8 @@
-
 package LibraryPal.demo.controller;
 
 import LibraryPal.demo.entity.Coordinator;
 import LibraryPal.demo.service.CoordinatorService;
+import LibraryPal.demo.service.LocalLibraryService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,13 +20,16 @@ public class SharedLoginController {
 
     private final CoordinatorService coordinatorService;
     private final PasswordEncoder passwordEncoder;
+    private final LocalLibraryService localLibraryService;
 
     public SharedLoginController(
             CoordinatorService coordinatorService,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder,
+            LocalLibraryService localLibraryService) {
 
         this.coordinatorService = coordinatorService;
         this.passwordEncoder = passwordEncoder;
+        this.localLibraryService = localLibraryService;
     }
 
     // Display provider login page
@@ -105,5 +108,12 @@ public class SharedLoginController {
         );
 
         return "redirect:/login";
+    }
+    //home page
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("libraries", localLibraryService.getAll()
+    );
+        return "shared/index";
     }
 }

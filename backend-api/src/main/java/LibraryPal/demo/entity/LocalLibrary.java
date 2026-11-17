@@ -22,18 +22,18 @@ public class LocalLibrary {
     @Column(nullable = false)
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "coordinator_id")
+    @ManyToMany(mappedBy = "libraries")
     @JsonIgnore
-    private Coordinator coordinator;
+    private List<Coordinator> coordinators = new ArrayList<>();
 
-    public Coordinator getCoordinator() {
-    return coordinator;
+    public List<Coordinator> getCoordinators() {
+        return coordinators;
     }
 
-    public void setCoordinator(Coordinator coordinator) {
-    this.coordinator = coordinator;
+    public void setCoordinators(List<Coordinator> coordinators) {
+        this.coordinators = coordinators;
     }
+   
 
     @OneToMany(mappedBy = "localLibrary")
     @JsonIgnore

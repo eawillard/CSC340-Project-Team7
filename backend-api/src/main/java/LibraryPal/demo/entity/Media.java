@@ -37,8 +37,8 @@ public class Media {
     @Column(nullable = false)
     private boolean available = true;
 
-    @ManyToOne
-    @JoinColumn(name = "local_library_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "local_library_id", nullable = false)
     @JsonIgnore
     private LocalLibrary localLibrary;
 

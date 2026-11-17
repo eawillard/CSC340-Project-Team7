@@ -29,26 +29,19 @@ public class Coordinator {
     @NotBlank
     private String accountStatus;
 
-    @OneToMany(mappedBy = "coordinator")
+   @ManyToMany
+   @JoinTable(
+        name = "coordinator_library",
+        joinColumns = @JoinColumn(name = "coordinator_id"),
+        inverseJoinColumns = @JoinColumn(name = "library_id")
+    )
     private List<LocalLibrary> libraries = new ArrayList<>();
 
     public List<LocalLibrary> getLibraries() {
-    return libraries;
+        return libraries;
     }
-
     public void setLibraries(List<LocalLibrary> libraries) {
         this.libraries = libraries;
-    }
-
-    @OneToMany(mappedBy = "coordinator")
-    private List<Book> books = new ArrayList<>();
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 
     public Coordinator() {

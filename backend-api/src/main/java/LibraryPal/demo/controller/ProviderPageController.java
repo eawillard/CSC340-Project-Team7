@@ -4,9 +4,15 @@ import jakarta.servlet.http.HttpSession;
 
 import LibraryPal.demo.entity.Book;
 import LibraryPal.demo.entity.Coordinator;
+import LibraryPal.demo.entity.LocalLibrary;
+
 import LibraryPal.demo.repository.BookRepository;
 import LibraryPal.demo.repository.LocalLibraryRepository;
 import LibraryPal.demo.service.CoordinatorService;
+import LibraryPal.demo.service.LocalLibraryService;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,17 +31,21 @@ public class ProviderPageController {
     private final PasswordEncoder passwordEncoder;
     private final BookRepository bookRepository;
     private final LocalLibraryRepository localLibraryRepository;
+    private final LocalLibraryService localLibraryService;
 
     public ProviderPageController(
             CoordinatorService coordinatorService,
             PasswordEncoder passwordEncoder,
             BookRepository bookRepository,
-            LocalLibraryRepository localLibraryRepository) {
+            LocalLibraryRepository localLibraryRepository,
+            LocalLibraryService localLibraryService
+        ) {
 
         this.coordinatorService = coordinatorService;
         this.passwordEncoder = passwordEncoder;
         this.bookRepository = bookRepository;
         this.localLibraryRepository = localLibraryRepository;
+        this.localLibraryService = localLibraryService;
     }
 
     // SESSION MANAGEMENT
@@ -178,9 +188,7 @@ public class ProviderPageController {
 
         model.addAttribute(
                 "libraries",
-                localLibraryRepository.findByCoordinatorId(
-                        coordinator.getId()
-                )
+                localLibraryService.getByCoordinator(coordinator.getId())
         );
 
         return "provider/profile";
@@ -523,6 +531,84 @@ public class ProviderPageController {
 
         return "redirect:/provider/books";
     }
+    
+    // MANAGE LIBRARIES
+
+    @GetMapping("/libraries")
+    public String manageLibraries(
+            HttpSession session,
+            Model model) {
+
+        Coordinator coordinator = getCurrentCoordinator(session);
+
+        // Every coordinator sees every registered library
+        List<LocalLibrary> libraries =
+                localLibraryService.getAll();
+
+        // Identify which libraries this coordinator has joined
+        Set<Long> assignedLibraryIds =
+                coordinator.getLibraries()
+                        .stream()
+                        .map(LocalLibrary::getId)
+                        .collect(Collectors.toSet());
+
+        model.addAttribute("libraries", libraries);
+        model.addAttribute(
+                "assignedLibraryIds",
+                assignedLibraryIds
+        );
+
+        return "provider/libraries";
+    }
+
+    // ASSIGN YOURSELF TO A LIBRARY
+
+    @PostMapping("/libraries/{id}/assign")
+    public String assignLibrary(
+            @PathVariable Long id,
+            HttpSession session) {
+
+        Long coordinatorId = getCoordinatorId(session);
+
+        localLibraryService.assignCoordinator(
+                id,
+                coordinatorId
+        );
+
+        return "redirect:/provider/libraries";
+    }
+
+    // CREATE A NEW LIBRARY
+
+    @PostMapping("/libraries")
+    public String addLibrary(
+            HttpSession session,
+            @RequestParam String name,
+            @RequestParam String address,
+            Model model) {
+
+        Long coordinatorId = getCoordinatorId(session);
+
+        if (name.isBlank() || address.isBlank()) {
+
+            model.addAttribute(
+                    "errorMessage",
+                    "Please complete both library fields."
+            );
+
+            return manageLibraries(session, model);
+        }
+
+        LocalLibrary library = new LocalLibrary();
+
+        library.setName(name.trim());
+        library.setAddress(address.trim());
+
+        localLibraryService.create(library, coordinatorId);
+
+        return "redirect:/provider/libraries";
+    }
+    
     //log out
     @GetMapping("/logout")
 public String logout(HttpSession session) {
