@@ -48,52 +48,54 @@ public class LocalLibraryService {
                         "Library not found"));
     }
 
-    // Allow a coordinator to assign themselves to a library
-    @Transactional
-    public void assignCoordinator(
-            Long libraryId,
-            Long coordinatorId) {
+    
+@Transactional
+public void assignCoordinator(
+        Long libraryId,
+        Long coordinatorId) {
 
-        LocalLibrary library = getById(libraryId);
+    LocalLibrary library = getById(libraryId);
 
-        Coordinator coordinator = coordinatorRepository
-                .findById(coordinatorId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Coordinator not found"));
+    Coordinator coordinator = coordinatorRepository
+            .findById(coordinatorId)
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Coordinator not found"));
 
-        boolean alreadyAssigned = coordinator.getLibraries()
-                .stream()
-                .anyMatch(existing ->
-                        existing.getId().equals(libraryId));
+    boolean alreadyAssigned = library.getCoordinators()
+            .stream()
+            .anyMatch(existing ->
+                    existing.getId().equals(coordinatorId));
 
-        if (!alreadyAssigned) {
-            coordinator.getLibraries().add(library);
-            coordinatorRepository.save(coordinator);
-        }
+    if (!alreadyAssigned) {
+        library.getCoordinators().add(coordinator);
+        coordinator.getLibraries().add(library);
+
+        libraryRepository.save(library);
     }
+}
 
     // Create a library and assign its creator
-    @Transactional
-    public LocalLibrary create(
-            LocalLibrary library,
-            Long coordinatorId) {
-
-        Coordinator coordinator = coordinatorRepository
-                .findById(coordinatorId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Coordinator not found"));
-
-        LocalLibrary saved = libraryRepository.save(library);
-
-        coordinator.getLibraries().add(saved);
-
-        coordinatorRepository.save(coordinator);
-
-        return saved;
-    }
     
+@Transactional
+public LocalLibrary create(
+        LocalLibrary library,
+        Long coordinatorId) {
+
+    Coordinator coordinator = coordinatorRepository
+            .findById(coordinatorId)
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Coordinator not found"));
+
+    LocalLibrary saved = libraryRepository.save(library);
+
+    saved.getCoordinators().add(coordinator);
+    coordinator.getLibraries().add(saved);
+
+    return libraryRepository.save(saved);
+}
+
     @Transactional
     public LocalLibrary update(Long id, LocalLibrary updated) {
 
@@ -104,14 +106,18 @@ public class LocalLibraryService {
 
         return libraryRepository.save(library);
     }
-
+    // delete a library and remove its coordinator associations
     @Transactional
-    public void delete(Long id) {
+public void delete(Long id) {
 
-        LocalLibrary library = getById(id);
+    LocalLibrary library = getById(id);
 
-        libraryRepository.delete(library);
-    }
+    // Remove coordinator associations first
+    library.getCoordinators().clear();
+
+    // Delete the library
+    libraryRepository.delete(library);
+}
     // Create a library without assigning a coordinator
     public LocalLibrary create(LocalLibrary library) {
     return libraryRepository.save(library);

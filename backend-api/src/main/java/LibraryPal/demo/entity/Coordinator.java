@@ -1,15 +1,19 @@
+
 package LibraryPal.demo.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity 
+@Entity
 public class Coordinator {
-     @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,20 +33,10 @@ public class Coordinator {
     @NotBlank
     private String accountStatus;
 
-   @ManyToMany
-   @JoinTable(
-        name = "coordinator_library",
-        joinColumns = @JoinColumn(name = "coordinator_id"),
-        inverseJoinColumns = @JoinColumn(name = "library_id")
-    )
+   // A coordinator can manage multiple shared libraries.
+    @ManyToMany(mappedBy = "coordinators")
+    @JsonIgnore
     private List<LocalLibrary> libraries = new ArrayList<>();
-
-    public List<LocalLibrary> getLibraries() {
-        return libraries;
-    }
-    public void setLibraries(List<LocalLibrary> libraries) {
-        this.libraries = libraries;
-    }
 
     public Coordinator() {
     }
@@ -81,5 +75,13 @@ public class Coordinator {
 
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    public List<LocalLibrary> getLibraries() {
+        return libraries;
+    }
+
+    public void setLibraries(List<LocalLibrary> libraries) {
+        this.libraries = libraries;
     }
 }

@@ -8,29 +8,23 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    // Find books belonging to a coordinator
-    List<Book> findByCoordinatorId(Long coordinatorId);
+    // Find books across all libraries belonging to a coordinator.
+    List<Book> findDistinctByLocalLibraryCoordinators_Id(Long coordinatorId);
 
-    // Find books belonging to a library
+    // Find books belonging to a particular library.
     List<Book> findByLocalLibraryId(Long libraryId);
 
-    // Check ISBN uniqueness for a coordinator
-    boolean existsByIsbnAndCoordinatorId(
-            String isbn, Long coordinatorId);
-
-    boolean existsByIsbnAndCoordinatorIdAndIdNot(
-            String isbn, Long coordinatorId, Long id);
-
-    // Existing library-based methods
+    // Check ISBN uniqueness within a library.
     boolean existsByIsbnAndLocalLibraryId(
             String isbn, Long libraryId);
 
     boolean existsByIsbnAndLocalLibraryIdAndIdNot(
             String isbn, Long libraryId, Long id);
 
+    // Count books in a particular library.
     long countByLocalLibraryId(Long libraryId);
 
-    // Search books
+    // Search books by title or author.
     List<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(
             String title, String author);
 }

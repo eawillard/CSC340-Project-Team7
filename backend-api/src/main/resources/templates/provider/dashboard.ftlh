@@ -130,6 +130,25 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-content">
+
+                        <h3>Manage Libraries</h3>
+
+                        <p>
+                            Browse established libraries,
+                            manage your assignments, and add books
+                            to shared library collections.
+                        </p>
+
+                        <a href="/provider/libraries"
+                           class="btn btn-primary">
+                            My Libraries
+                        </a>
+
+                    </div>
+                </div>
+
             </div>
 
         </section>

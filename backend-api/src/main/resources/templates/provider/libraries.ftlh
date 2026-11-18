@@ -29,95 +29,70 @@
         </#if>
 
         <section class="section">
-
             <h2>All Registered Libraries</h2>
 
             <#if libraries?? && libraries?has_content>
-
                 <#list libraries as library>
-
                     <article class="card">
                         <div class="card-content">
-
                             <h3>${library.name}</h3>
-
                             <p>${library.address}</p>
 
-                            <#if assignedLibraryIds?? &&
-                                assignedLibraryIds?seq_contains(library.id)>
+                            <div class="card-actions">
+                                <#if assignedLibraryIds?? && assignedLibraryIds?seq_contains(library.id)>
+                                    <p class="success-message">
+                                        You are assigned to this library.
+                                    </p>
 
-                                <p class="success-message">
-                                    You are assigned to this library.
-                                </p>
-
-                                <button class="btn btn-outline"
-                                        disabled>
-                                    Assigned
-                                </button>
-
-                            <#else>
+                                    <button type="button" class="btn btn-outline" disabled>
+                                        Assigned
+                                    </button>
+                                <#else>
+                                    <form method="post" action="/provider/libraries/${library.id}/assign">
+                                        <button type="submit" class="btn btn-primary">
+                                            Assign Myself
+                                        </button>
+                                    </form>
+                                </#if>
 
                                 <form method="post"
-                                      action="/provider/libraries/${library.id}/assign">
-
-                                    <button type="submit"
-                                            class="btn btn-primary">
-                                        Assign Myself
+                                      action="/provider/libraries/${library.id}/delete"
+                                      onsubmit="return confirm('Are you sure you want to delete this library?');">
+                                    <button type="submit" class="btn btn-outline">
+                                        Delete Library
                                     </button>
-
                                 </form>
-
-                            </#if>
-
+                            </div>
                         </div>
                     </article>
-
                 </#list>
-
             <#else>
-
                 <p>No libraries have been registered yet.</p>
-
             </#if>
-
         </section>
 
         <section class="section">
-
             <h2>Register a New Library</h2>
 
             <div class="card">
                 <div class="card-content">
-
-                    <form action="/provider/libraries"
-                          method="post">
-
+                    <form action="/provider/libraries" method="post">
                         <div class="form-group">
                             <label for="name">Library Name</label>
-                            <input type="text"
-                                   id="name"
-                                   name="name"
-                                   required>
+                            <input type="text" id="name" name="name" required>
                         </div>
 
                         <div class="form-group">
                             <label for="address">Library Address</label>
-                            <input type="text"
-                                   id="address"
-                                   name="address"
-                                   required>
+                            <input type="text" id="address" name="address" required>
                         </div>
 
-                        <button type="submit"
-                                class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
                             Register Library
                         </button>
-
                     </form>
-
                 </div>
             </div>
-
         </section>
 
     </main>
