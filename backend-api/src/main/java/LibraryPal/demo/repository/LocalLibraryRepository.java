@@ -8,7 +8,6 @@ import java.util.List;
 public interface LocalLibraryRepository
         extends JpaRepository<LocalLibrary, Long> {
 
-    // Find libraries connected to a particular coordinator
+    // Find all libraries belonging to a coordinator.
     List<LocalLibrary> findDistinctByCoordinators_Id(Long coordinatorId);
-
 }

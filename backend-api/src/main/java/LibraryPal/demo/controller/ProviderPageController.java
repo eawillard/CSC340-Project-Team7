@@ -1,3 +1,4 @@
+
 package LibraryPal.demo.controller;
 
 import jakarta.servlet.http.HttpSession;
@@ -8,11 +9,14 @@ import LibraryPal.demo.entity.LocalLibrary;
 
 import LibraryPal.demo.repository.BookRepository;
 import LibraryPal.demo.repository.LocalLibraryRepository;
+import LibraryPal.demo.repository.CoordinatorRepository;
+
 import LibraryPal.demo.service.CoordinatorService;
 import LibraryPal.demo.service.LocalLibraryService;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,8 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/provider")
@@ -32,20 +34,22 @@ public class ProviderPageController {
     private final BookRepository bookRepository;
     private final LocalLibraryRepository localLibraryRepository;
     private final LocalLibraryService localLibraryService;
+    private final CoordinatorRepository coordinatorRepository;
 
     public ProviderPageController(
             CoordinatorService coordinatorService,
             PasswordEncoder passwordEncoder,
             BookRepository bookRepository,
             LocalLibraryRepository localLibraryRepository,
-            LocalLibraryService localLibraryService
-        ) {
-
+            LocalLibraryService localLibraryService,
+            CoordinatorRepository coordinatorRepository
+    ) {
         this.coordinatorService = coordinatorService;
         this.passwordEncoder = passwordEncoder;
         this.bookRepository = bookRepository;
         this.localLibraryRepository = localLibraryRepository;
         this.localLibraryService = localLibraryService;
+        this.coordinatorRepository = coordinatorRepository;
     }
 
     // SESSION MANAGEMENT
@@ -77,8 +81,10 @@ public class ProviderPageController {
 
     private void verifyBookOwnership(Book book, Long coordinatorId) {
 
-        if (book.getCoordinator() == null ||
-                !book.getCoordinator().getId().equals(coordinatorId)) {
+        if (book.getLocalLibrary() == null ||
+                book.getLocalLibrary().getCoordinators() == null ||
+                book.getLocalLibrary().getCoordinators().stream()
+                        .noneMatch(c -> c.getId().equals(coordinatorId))) {
 
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
@@ -117,9 +123,7 @@ public class ProviderPageController {
 
             coordinator.setName(name.trim());
             coordinator.setEmail(email.trim().toLowerCase());
-            coordinator.setPassword(
-                    passwordEncoder.encode(password)
-            );
+            coordinator.setPassword(passwordEncoder.encode(password));
             coordinator.setAccountStatus("ACTIVE");
 
             Coordinator saved =
@@ -148,7 +152,8 @@ public class ProviderPageController {
         Coordinator coordinator = getCurrentCoordinator(session);
 
         List<Book> books =
-                bookRepository.findByCoordinatorId(coordinator.getId());
+                bookRepository.findDistinctByLocalLibraryCoordinators_Id(
+                        coordinator.getId());
 
         int totalCopies = books.stream()
                 .mapToInt(Book::getTotalCopies)
@@ -160,15 +165,12 @@ public class ProviderPageController {
 
         model.addAttribute("provider", coordinator);
         model.addAttribute("coordinator", coordinator);
-
         model.addAttribute("books", books);
         model.addAttribute("totalBooks", books.size());
         model.addAttribute("availableBooks", availableCopies);
         model.addAttribute("totalCustomers", 0);
         model.addAttribute("pendingRequests", 0);
 
-        // These features have not yet been connected
-        // to the provider dashboard.
         model.addAttribute("pickups", List.of());
         model.addAttribute("reviews", List.of());
 
@@ -234,9 +236,7 @@ public class ProviderPageController {
             updated.setPassword(existing.getPassword());
 
             if (password != null && !password.isBlank()) {
-                updated.setPassword(
-                        passwordEncoder.encode(password)
-                );
+                updated.setPassword(passwordEncoder.encode(password));
             }
 
             coordinatorService.updateCoordinator(
@@ -280,7 +280,8 @@ public class ProviderPageController {
         Long coordinatorId = getCoordinatorId(session);
 
         List<Book> books =
-                bookRepository.findByCoordinatorId(coordinatorId);
+                bookRepository.findDistinctByLocalLibraryCoordinators_Id(
+                        coordinatorId);
 
         int totalCopies = books.stream()
                 .mapToInt(Book::getTotalCopies)
@@ -302,19 +303,27 @@ public class ProviderPageController {
         return "provider/manage-books";
     }
 
-    // ADD BOOK
+    // ADD BOOK - GET
 
     @GetMapping("/books/new")
     public String newBook(
             HttpSession session,
             Model model) {
 
-        getCoordinatorId(session);
+        Long coordinatorId = getCoordinatorId(session);
 
         model.addAttribute("book", new Book());
 
+        model.addAttribute(
+                "libraries",
+                localLibraryRepository.findDistinctByCoordinators_Id(
+                        coordinatorId)
+        );
+
         return "provider/new-book";
     }
+
+    // ADD BOOK - POST
 
     @PostMapping("/books/new")
     public String addBook(
@@ -328,11 +337,23 @@ public class ProviderPageController {
             @RequestParam Integer totalCopies,
             @RequestParam String description,
             @RequestParam String location,
+            @RequestParam Long libraryId,
             Model model) {
 
         Long coordinatorId = getCoordinatorId(session);
 
         try {
+
+            LocalLibrary library =
+                    localLibraryRepository.findDistinctByCoordinators_Id(
+                            coordinatorId)
+                            .stream()
+                            .filter(l -> l.getId().equals(libraryId))
+                            .findFirst()
+                            .orElseThrow(() -> new ResponseStatusException(
+                                    HttpStatus.FORBIDDEN,
+                                    "You are not assigned to this library"
+                            ));
 
             if (title.isBlank() ||
                     author.isBlank() ||
@@ -360,8 +381,6 @@ public class ProviderPageController {
                 );
             }
 
-            Coordinator coordinator = getCurrentCoordinator(session);
-
             Book book = new Book();
 
             book.setTitle(title.trim());
@@ -375,8 +394,7 @@ public class ProviderPageController {
             book.setDescription(description.trim());
             book.setLocation(location.trim());
 
-            book.setCoordinator(coordinator);
-            book.setLocalLibrary(null);
+            book.setLocalLibrary(library);
 
             bookRepository.save(book);
 
@@ -397,11 +415,17 @@ public class ProviderPageController {
             model.addAttribute("formDescription", description);
             model.addAttribute("formLocation", location);
 
+            model.addAttribute(
+                    "libraries",
+                    localLibraryRepository.findDistinctByCoordinators_Id(
+                            coordinatorId)
+            );
+
             return "provider/new-book";
         }
     }
 
-    // EDIT BOOK
+    // EDIT BOOK - GET
 
     @GetMapping("/books/{id}/edit")
     public String editBook(
@@ -421,8 +445,16 @@ public class ProviderPageController {
 
         model.addAttribute("book", book);
 
+        model.addAttribute(
+                "libraries",
+                localLibraryRepository.findDistinctByCoordinators_Id(
+                        coordinatorId)
+        );
+
         return "provider/edit-book";
     }
+
+    // EDIT BOOK - POST
 
     @PostMapping("/books/{id}/edit")
     public String updateBook(
@@ -437,6 +469,7 @@ public class ProviderPageController {
             @RequestParam Integer totalCopies,
             @RequestParam String description,
             @RequestParam String location,
+            @RequestParam Long libraryId,
             Model model) {
 
         Long coordinatorId = getCoordinatorId(session);
@@ -448,6 +481,24 @@ public class ProviderPageController {
                 ));
 
         verifyBookOwnership(book, coordinatorId);
+
+        LocalLibrary library =
+                localLibraryRepository.findDistinctByCoordinators_Id(
+                        coordinatorId)
+                        .stream()
+                        .filter(l -> l.getId().equals(libraryId))
+                        .findFirst()
+                        .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.FORBIDDEN,
+                                "You are not assigned to this library"
+                        ));
+
+        if (!book.getLocalLibrary().getId().equals(library.getId())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "You cannot move a book to another library."
+            );
+        }
 
         try {
 
@@ -506,6 +557,12 @@ public class ProviderPageController {
             model.addAttribute("book", book);
             model.addAttribute("errorMessage", ex.getMessage());
 
+            model.addAttribute(
+                    "libraries",
+                    localLibraryRepository.findDistinctByCoordinators_Id(
+                            coordinatorId)
+            );
+
             return "provider/edit-book";
         }
     }
@@ -531,7 +588,7 @@ public class ProviderPageController {
 
         return "redirect:/provider/books";
     }
-    
+
     // MANAGE LIBRARIES
 
     @GetMapping("/libraries")
@@ -541,18 +598,17 @@ public class ProviderPageController {
 
         Coordinator coordinator = getCurrentCoordinator(session);
 
-        // Every coordinator sees every registered library
         List<LocalLibrary> libraries =
                 localLibraryService.getAll();
 
-        // Identify which libraries this coordinator has joined
-        Set<Long> assignedLibraryIds =
-                coordinator.getLibraries()
-                        .stream()
-                        .map(LocalLibrary::getId)
-                        .collect(Collectors.toSet());
+    Set<Long> assignedLibraryIds =
+        localLibraryService.getByCoordinator(coordinator.getId())
+                .stream()
+                .map(LocalLibrary::getId)
+                .collect(Collectors.toSet());
 
         model.addAttribute("libraries", libraries);
+
         model.addAttribute(
                 "assignedLibraryIds",
                 assignedLibraryIds
@@ -608,13 +664,27 @@ public class ProviderPageController {
 
         return "redirect:/provider/libraries";
     }
-    
-    //log out
-    @GetMapping("/logout")
-public String logout(HttpSession session) {
+    // DELETE LIBRARY
 
-    session.invalidate();
+@PostMapping("/libraries/{id}/delete")
+public String deleteLibrary(
+        @PathVariable Long id,
+        HttpSession session) {
 
-    return "redirect:/login";
+    getCoordinatorId(session);
+
+    localLibraryService.delete(id);
+
+    return "redirect:/provider/libraries";
 }
+
+    // LOG OUT
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+
+        session.invalidate();
+
+        return "redirect:/login";
+    }
 }

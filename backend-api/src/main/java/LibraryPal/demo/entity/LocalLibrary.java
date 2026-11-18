@@ -22,42 +22,69 @@ public class LocalLibrary {
     @Column(nullable = false)
     private String address;
 
-    @ManyToMany(mappedBy = "libraries")
+   // Multiple coordinators can manage the same library.
+@ManyToMany
+@JoinTable(
+    name = "coordinator_library",
+    joinColumns = @JoinColumn(name = "library_id"),
+    inverseJoinColumns = @JoinColumn(name = "coordinator_id")
+)
     @JsonIgnore
     private List<Coordinator> coordinators = new ArrayList<>();
 
-    public List<Coordinator> getCoordinators() {
-        return coordinators;
-    }
+    // One library can contain multiple books.
+    @OneToMany(mappedBy = "localLibrary")
+    @JsonIgnore
+    private List<Book> books = new ArrayList<>();
 
-    public void setCoordinators(List<Coordinator> coordinators) {
-        this.coordinators = coordinators;
-    }
-   
-
+    // One library can contain multiple media items.
     @OneToMany(mappedBy = "localLibrary")
     @JsonIgnore
     private List<Media> media = new ArrayList<>();
+
     public LocalLibrary() {
     }
+
     public Long getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public List<Coordinator> getCoordinators() {
+    return coordinators;
+    }
+
+    public void setCoordinators(List<Coordinator> coordinators) {
+    this.coordinators = coordinators;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     public List<Media> getMedia() {
         return media;
     }
+
     public void setMedia(List<Media> media) {
         this.media = media;
     }

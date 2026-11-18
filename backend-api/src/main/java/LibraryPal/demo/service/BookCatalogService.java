@@ -66,7 +66,7 @@ public class BookCatalogService {
         validateCopies(request);
 
         if (bookRepository.existsByIsbnAndLocalLibraryId(
-                request.getIsbn(), library.getId())) {
+                request.getIsbn().trim(), library.getId())) {
 
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -81,7 +81,7 @@ public class BookCatalogService {
         return bookRepository.save(book);
     }
 
-    // COORDINATOR: Edit a book in an assigned library
+    // COORDINATOR: Edit a book in its assigned library
     @Transactional
     public Book update(
             Long id,
@@ -90,11 +90,17 @@ public class BookCatalogService {
 
         Book book = getById(id);
 
+        // Verify access to the book's existing library
+        checkCoordinatorAssignment(
+                coordinatorId,
+                book.getLocalLibrary().getId());
+
         LocalLibrary library = getLibrary(request.getLibraryId());
 
+        // Verify access to the requested library
         checkCoordinatorAssignment(coordinatorId, library.getId());
 
-        // Prevent moving a book to a different library through this method
+        // Prevent moving books between libraries
         if (!book.getLocalLibrary().getId().equals(library.getId())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -104,7 +110,7 @@ public class BookCatalogService {
         validateCopies(request);
 
         if (bookRepository.existsByIsbnAndLocalLibraryIdAndIdNot(
-                request.getIsbn(), library.getId(), id)) {
+                request.getIsbn().trim(), library.getId(), id)) {
 
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -116,7 +122,7 @@ public class BookCatalogService {
         return bookRepository.save(book);
     }
 
-    // COORDINATOR: Delete a book from an assigned library
+    // COORDINATOR: Delete a book
     @Transactional
     public void delete(Long id, Long coordinatorId) {
 
@@ -129,6 +135,7 @@ public class BookCatalogService {
         bookRepository.delete(book);
     }
 
+    // Get library
     private LocalLibrary getLibrary(Long libraryId) {
 
         return libraryRepository.findById(libraryId)
@@ -136,6 +143,7 @@ public class BookCatalogService {
                         HttpStatus.NOT_FOUND, "Library not found"));
     }
 
+    // Check whether coordinator manages library
     private void checkCoordinatorAssignment(
             Long coordinatorId,
             Long libraryId) {
@@ -158,6 +166,7 @@ public class BookCatalogService {
         }
     }
 
+    // Validate copy numbers
     private void validateCopies(BookRequest request) {
 
         if (request.getTotalCopies() == null
@@ -173,17 +182,19 @@ public class BookCatalogService {
         }
     }
 
+    // Update book fields
     private void updateFields(Book book, BookRequest request) {
 
-        book.setTitle(request.getTitle());
-        book.setAuthor(request.getAuthor());
-        book.setIsbn(request.getIsbn());
-        book.setGenre(request.getGenre());
+        book.setTitle(request.getTitle().trim());
+        book.setAuthor(request.getAuthor().trim());
+        book.setIsbn(request.getIsbn().trim());
+        book.setGenre(request.getGenre().trim());
         book.setPublisher(request.getPublisher());
         book.setPublicationYear(request.getPublicationYear());
-        book.setDescription(request.getDescription());
+        book.setDescription(request.getDescription().trim());
         book.setTotalCopies(request.getTotalCopies());
         book.setAvailableCopies(request.getAvailableCopies());
-        book.setLocation(request.getLocation());
+        book.setLocation(request.getLocation().trim());
     }
 }
+
