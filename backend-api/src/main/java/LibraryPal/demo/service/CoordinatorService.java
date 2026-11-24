@@ -4,6 +4,7 @@ package LibraryPal.demo.service;
 import LibraryPal.demo.entity.Coordinator;
 import LibraryPal.demo.repository.CoordinatorRepository;
 import LibraryPal.demo.repository.ServiceRequestRepository;
+import LibraryPal.demo.entity.LocalLibrary;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -101,16 +102,31 @@ public class CoordinatorService {
         });
     }
 
-    public boolean deleteCoordinator(Long id) {
+    @Transactional
+public boolean deleteCoordinator(Long id) {
 
-        if (!coordinatorRepository.existsById(id)) {
-            return false;
-        }
+    Coordinator coordinator = coordinatorRepository.findById(id)
+            .orElse(null);
 
-        coordinatorRepository.deleteById(id);
-
-        return true;
+    if (coordinator == null) {
+        return false;
     }
+
+    // Remove the coordinator from all assigned libraries first.
+    for (LocalLibrary library : coordinator.getLibraries()) {
+
+        library.getCoordinators().removeIf(
+                assignedCoordinator ->
+                        assignedCoordinator.getId().equals(id)
+        );
+    }
+
+    // Now that the library relationships are removed,
+    // the coordinator can be deleted.
+    coordinatorRepository.delete(coordinator);
+
+    return true;
+}
 
     public Map<String, Long> getStatistics(Long coordinatorId) {
 

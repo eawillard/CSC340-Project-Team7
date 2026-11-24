@@ -1,4 +1,3 @@
-
 package LibraryPal.demo.service;
 
 import LibraryPal.demo.dto.BookRequest;
@@ -197,4 +196,3 @@ public class BookCatalogService {
         book.setLocation(request.getLocation().trim());
     }
 }
-

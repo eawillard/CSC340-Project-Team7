@@ -1,4 +1,3 @@
-
 package LibraryPal.demo.controller;
 
 import jakarta.servlet.http.HttpSession;
@@ -151,10 +150,14 @@ public class ProviderPageController {
 
         Coordinator coordinator = getCurrentCoordinator(session);
 
-        List<Book> books =
-                bookRepository.findDistinctByLocalLibraryCoordinators_Id(
-                        coordinator.getId());
+        List<LocalLibrary> libraries =
+        localLibraryService.getByCoordinator(coordinator.getId());
 
+        List<Book> books = libraries.stream()
+        .flatMap(library ->
+                bookRepository.findByLocalLibraryId(library.getId())
+                        .stream())
+        .toList();
         int totalCopies = books.stream()
                 .mapToInt(Book::getTotalCopies)
                 .sum();
@@ -270,38 +273,45 @@ public class ProviderPageController {
         return "redirect:/login";
     }
 
-    // MANAGE BOOKS
-
+  // MANAGE BOOKS
     @GetMapping("/books")
-    public String manageBooks(
-            HttpSession session,
-            Model model) {
+        public String manageBooks(
+        HttpSession session,
+        Model model) {
 
-        Long coordinatorId = getCoordinatorId(session);
+    Long coordinatorId = getCoordinatorId(session);
 
-        List<Book> books =
-                bookRepository.findDistinctByLocalLibraryCoordinators_Id(
-                        coordinatorId);
+    // Get all libraries assigned to this coordinator
+    List<LocalLibrary> libraries =
+            localLibraryService.getByCoordinator(coordinatorId);
 
-        int totalCopies = books.stream()
-                .mapToInt(Book::getTotalCopies)
-                .sum();
+    // Retrieve books from each assigned library
+    List<Book> books = libraries.stream()
+            .flatMap(library ->
+                    bookRepository.findByLocalLibraryId(library.getId())
+                            .stream())
+            .toList();
 
-        int availableCopies = books.stream()
-                .mapToInt(Book::getAvailableCopies)
-                .sum();
+    // Calculate collection statistics
+    int totalCopies = books.stream()
+            .mapToInt(Book::getTotalCopies)
+            .sum();
 
-        model.addAttribute("books", books);
-        model.addAttribute("totalBooks", books.size());
-        model.addAttribute("totalCopies", totalCopies);
-        model.addAttribute("availableCopies", availableCopies);
-        model.addAttribute(
-                "checkedOutCopies",
-                totalCopies - availableCopies
-        );
+    int availableCopies = books.stream()
+            .mapToInt(Book::getAvailableCopies)
+            .sum();
 
-        return "provider/manage-books";
-    }
+    model.addAttribute("books", books);
+    model.addAttribute("totalBooks", books.size());
+    model.addAttribute("totalCopies", totalCopies);
+    model.addAttribute("availableCopies", availableCopies);
+    model.addAttribute(
+            "checkedOutCopies",
+            totalCopies - availableCopies
+    );
+
+    return "provider/manage-books";
+}
 
     // ADD BOOK - GET
 
@@ -336,7 +346,6 @@ public class ProviderPageController {
             @RequestParam(required = false) Integer publicationYear,
             @RequestParam Integer totalCopies,
             @RequestParam String description,
-            @RequestParam String location,
             @RequestParam Long libraryId,
             Model model) {
 
@@ -359,8 +368,8 @@ public class ProviderPageController {
                     author.isBlank() ||
                     isbn.isBlank() ||
                     genre.isBlank() ||
-                    description.isBlank() ||
-                    location.isBlank()) {
+                    description.isBlank())
+                     {
 
                 throw new IllegalArgumentException(
                         "Please complete all required fields."
@@ -373,8 +382,10 @@ public class ProviderPageController {
                 );
             }
 
-            if (bookRepository.existsByIsbnAndCoordinatorId(
-                    isbn.trim(), coordinatorId)) {
+            String trimmedIsbn = isbn.trim();
+
+            if (bookRepository.existsByIsbnAndLocalLibraryId(
+                 trimmedIsbn, libraryId)) {
 
                 throw new IllegalArgumentException(
                         "This ISBN already exists in your collection."
@@ -382,18 +393,16 @@ public class ProviderPageController {
             }
 
             Book book = new Book();
-
             book.setTitle(title.trim());
             book.setAuthor(author.trim());
-            book.setIsbn(isbn.trim());
+            book.setIsbn(trimmedIsbn);
             book.setGenre(genre.trim());
             book.setPublisher(publisher);
             book.setPublicationYear(publicationYear);
             book.setTotalCopies(totalCopies);
             book.setAvailableCopies(totalCopies);
             book.setDescription(description.trim());
-            book.setLocation(location.trim());
-
+            book.setLocation(library.getName());
             book.setLocalLibrary(library);
 
             bookRepository.save(book);
@@ -413,7 +422,7 @@ public class ProviderPageController {
             model.addAttribute("formPublicationYear", publicationYear);
             model.addAttribute("formTotalCopies", totalCopies);
             model.addAttribute("formDescription", description);
-            model.addAttribute("formLocation", location);
+            model.addAttribute("formLocation", libraryId);
 
             model.addAttribute(
                     "libraries",
@@ -426,7 +435,6 @@ public class ProviderPageController {
     }
 
     // EDIT BOOK - GET
-
     @GetMapping("/books/{id}/edit")
     public String editBook(
             @PathVariable Long id,
@@ -435,11 +443,11 @@ public class ProviderPageController {
 
         Long coordinatorId = getCoordinatorId(session);
 
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Book not found"
-                ));
+       Book book = bookRepository.findBookWithLibraryById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Book not found"
+        ));
 
         verifyBookOwnership(book, coordinatorId);
 
@@ -468,17 +476,16 @@ public class ProviderPageController {
             @RequestParam(required = false) Integer publicationYear,
             @RequestParam Integer totalCopies,
             @RequestParam String description,
-            @RequestParam String location,
             @RequestParam Long libraryId,
             Model model) {
 
         Long coordinatorId = getCoordinatorId(session);
 
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Book not found"
-                ));
+        Book book = bookRepository.findBookWithLibraryById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Book not found"
+        ));
 
         verifyBookOwnership(book, coordinatorId);
 
@@ -506,8 +513,8 @@ public class ProviderPageController {
                     author.isBlank() ||
                     isbn.isBlank() ||
                     genre.isBlank() ||
-                    description.isBlank() ||
-                    location.isBlank()) {
+                    description.isBlank())
+                    {
 
                 throw new IllegalArgumentException(
                         "Please complete all required fields."
@@ -520,8 +527,8 @@ public class ProviderPageController {
                 );
             }
 
-            if (bookRepository.existsByIsbnAndCoordinatorIdAndIdNot(
-                    isbn.trim(), coordinatorId, id)) {
+            if (bookRepository.existsByIsbnAndLocalLibraryIdAndIdNot(
+                     isbn.trim(), book.getLocalLibrary().getId(), id)) {
 
                 throw new IllegalArgumentException(
                         "Another book already uses this ISBN."
@@ -546,7 +553,7 @@ public class ProviderPageController {
             book.setTotalCopies(totalCopies);
             book.setAvailableCopies(totalCopies - checkedOut);
             book.setDescription(description.trim());
-            book.setLocation(location.trim());
+            book.setLocation(book.getLocalLibrary().getName());
 
             bookRepository.save(book);
 
@@ -576,7 +583,7 @@ public class ProviderPageController {
 
         Long coordinatorId = getCoordinatorId(session);
 
-        Book book = bookRepository.findById(id)
+        Book book = bookRepository.findBookWithLibraryById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Book not found"
@@ -584,9 +591,13 @@ public class ProviderPageController {
 
         verifyBookOwnership(book, coordinatorId);
 
-        bookRepository.delete(book);
-
-        return "redirect:/provider/books";
+        try {
+            bookRepository.delete(book);
+            bookRepository.flush();
+            return "redirect:/provider/books";
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
+            return "redirect:/provider/books?deleteError";
+        }
     }
 
     // MANAGE LIBRARIES
@@ -598,21 +609,16 @@ public class ProviderPageController {
 
         Coordinator coordinator = getCurrentCoordinator(session);
 
-        List<LocalLibrary> libraries =
-                localLibraryService.getAll();
+        List<LocalLibrary> libraries = localLibraryService.getAll();
 
-    Set<Long> assignedLibraryIds =
-        localLibraryService.getByCoordinator(coordinator.getId())
-                .stream()
-                .map(LocalLibrary::getId)
-                .collect(Collectors.toSet());
+        Set<Long> assignedLibraryIds =
+                localLibraryService.getByCoordinator(coordinator.getId())
+                        .stream()
+                        .map(LocalLibrary::getId)
+                        .collect(Collectors.toSet());
 
         model.addAttribute("libraries", libraries);
-
-        model.addAttribute(
-                "assignedLibraryIds",
-                assignedLibraryIds
-        );
+        model.addAttribute("assignedLibraryIds", assignedLibraryIds);
 
         return "provider/libraries";
     }
@@ -631,7 +637,7 @@ public class ProviderPageController {
                 coordinatorId
         );
 
-        return "redirect:/provider/libraries";
+        return "redirect:/provider/dashboard";
     }
 
     // CREATE A NEW LIBRARY

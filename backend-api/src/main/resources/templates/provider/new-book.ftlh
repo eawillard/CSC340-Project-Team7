@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +18,10 @@
         <section class="section">
             <h1>Add a New Book</h1>
             <p>Enter the book details below.</p>
+
+            <a href="/provider/media/new" class="btn btn-outline">
+                Add Other Media (DVDs, CDs, etc.)
+            </a>
         </section>
 
         <#if errorMessage??>
@@ -114,14 +117,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="location">Library Location *</label>
-                            <input
-                                type="text"
-                                id="location"
-                                name="location"
-                                value="${formLocation!''}"
-                                placeholder="Central Library"
-                                required>
+                            <label for="libraryId">Library Location *</label>
+                            <select id="libraryId" name="libraryId" required>
+                                <option value="">Select a library</option>
+                                <#list libraries as library>
+                                    <option value="${library.id}"<#if formLibraryId?? && formLibraryId?string == library.id?string> selected</#if>>
+                                        ${library.name}
+                                    </option>
+                                </#list>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary">

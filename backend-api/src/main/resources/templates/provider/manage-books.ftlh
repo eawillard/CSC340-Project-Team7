@@ -157,10 +157,9 @@
 
                                 <form method="post"
                                       action="/provider/books/${book.id}/delete"
-                                      onsubmit="return confirm('Are you sure you want to delete this book?');">
+                                      onsubmit="return confirm('Are you sure you want to delete this book? This action cannot be undone.');">
 
-                                    <button type="submit"
-                                            class="btn btn-outline">
+                                    <button type="submit" class="btn btn-outline">
                                         Delete Book
                                     </button>
 

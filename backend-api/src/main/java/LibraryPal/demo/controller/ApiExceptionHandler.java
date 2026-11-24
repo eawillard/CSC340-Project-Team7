@@ -1,6 +1,8 @@
 package LibraryPal.demo.controller;
 
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(ApiExceptionHandler.class);
 
     // Handle validation errors in request bodies
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -35,13 +40,18 @@ public class ApiExceptionHandler {
     public ResponseEntity<Map<String, String>> handleConstraintViolation(
             ConstraintViolationException exception) {
 
+        logger.warn("Validation error: {}", exception.getMessage());
+
         return error(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
-    // Handle database constraint conflicts, such as duplicate emails
+    // Handle database constraint conflicts
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleConflict(
             DataIntegrityViolationException exception) {
+
+        // Log the complete database error in the VS Code terminal
+        logger.error("DATABASE INTEGRITY ERROR:", exception);
 
         return error(
                 HttpStatus.CONFLICT,
@@ -65,7 +75,7 @@ public class ApiExceptionHandler {
         return error(status, message);
     }
 
-        // Handle requests for resources that do not exist
+    // Handle requests for resources that do not exist
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgument(
             IllegalArgumentException exception) {
@@ -79,6 +89,19 @@ public class ApiExceptionHandler {
                 : HttpStatus.BAD_REQUEST;
 
         return error(status, message);
+    }
+
+    // Handle unexpected errors
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleGeneralException(
+            Exception exception) {
+
+        logger.error("UNEXPECTED SERVER ERROR:", exception);
+
+        return error(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "An unexpected server error occurred."
+        );
     }
 
     // Create a consistent JSON error response
